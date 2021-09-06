@@ -115,4 +115,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 LOGIN_URL = '/sign_in/'
 
 # Config for custom user
-# AUTH_USER_MODEL = ''
+AUTH_USER_MODEL = 'customers.CustomUser'
