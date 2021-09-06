@@ -25,16 +25,18 @@ class Product(models.Model):
     slug = models.SlugField(max_length=150)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField()
-    image = models.ImageField(upload_to='products_images')
-    number_of_product = models.PositiveSmallIntegerField()
+    image = models.ImageField(upload_to='product_images')
+    number_of_product = models.PositiveSmallIntegerField(blank=True, null=True)
     price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
-    insertion_date = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    in_stock = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
 
     class Meta:
         db_table = 'products'
         verbose_name = 'Product'
-        ordering = ['insertion_date']
+        ordering = ['-created']
 
     def __str__(self):
         return f'{self.name}'
