@@ -25,22 +25,16 @@ class Customer(AbstractUser):
     objects = UserManager()
 
     class Meta:
+        db_table = _("customers")
         verbose_name = _('CustomUser')
         verbose_name_plural = _('CustomUsers')
 
 
-class ShippingAddress(models.Model):
+class Address(models.Model):
     # Users can have one or many addresses
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    address1 = models.CharField(
-        _("Address Line 1"),
-        max_length=1024,
-    )
-
-    address2 = models.CharField(
-        _("Address Line 1"),
-        null=True,
-        blank=True,
+    address = models.CharField(
+        _("Address Line "),
         max_length=1024,
     )
 
@@ -60,7 +54,9 @@ class ShippingAddress(models.Model):
     )
     created_at = models.DateTimeField(_("Created at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
+    is_default = models.BooleanField(default=False)
 
     class Meta:
-        verbose_name = "Shipping Address"
-        verbose_name_plural = "Shipping Addresses"
+        db_table = _("addresses")
+        verbose_name = _("Address")
+        verbose_name_plural = _("Addresses")
