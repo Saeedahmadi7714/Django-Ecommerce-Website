@@ -28,9 +28,25 @@ class Order(models.Model):
     total_price = models.PositiveIntegerField()
 
     class Meta:
-        db_table = _('order')
+        db_table = _('orders')
         verbose_name = _('Order')
         verbose_name_plural = _('Orders')
+
+    def __str__(self):
+        return f'{self.customer}'
+
+
+class Discount(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    amount = models.PositiveSmallIntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+    expire_date = models.DateTimeField()
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = _('discounts')
+        verbose_name = _('Discount')
+        verbose_name_plural = _('Discounts')
 
     def __str__(self):
         return f'{self.customer}'
