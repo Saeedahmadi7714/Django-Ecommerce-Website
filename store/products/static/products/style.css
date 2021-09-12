@@ -1,55 +1,67 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
-body {
-  font-family: 'Open Sans', 'sans-serif';
-}
-.mega-dropdown {
-  position: static !important;
-}
-.mega-dropdown-menu {
-    padding: 20px 0px;
-    width: 100%;
-    box-shadow: none;
-    -webkit-box-shadow: none;
-}
-.mega-dropdown-menu > li > ul {
-  padding: 0;
-  margin: 0;
-}
-.mega-dropdown-menu > li > ul > li {
-  list-style: none;
-}
-.mega-dropdown-menu > li > ul > li > a {
-  display: block;
-  color: #222;
-  padding: 3px 5px;
-}
-.mega-dropdown-menu > li ul > li > a:hover,
-.mega-dropdown-menu > li ul > li > a:focus {
-  text-decoration: none;
-}
-.mega-dropdown-menu .dropdown-header {
-  font-size: 18px;
-  color: #ff3546;
-  padding: 5px 60px 5px 5px;
-  line-height: 30px;
+.card {
+    width: 444px;
+    padding: 20px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 17px 10px -10px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 300ms;
+    transition: all ease-in-out 300ms;
 }
 
-.carousel-control {
-  width: 30px;
-  height: 30px;
-  top: -35px;
+
+.card:hover {
+    box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);
+    -webkit-transform: translate(0px, -10px) scale(1);
+    transform: translate(0px, -10px) scale(1);
+}
+
+.heading {
+    margin-top: 20px;
+}
+
+.navbar {
+    background-color: #232323;
+}
+
+.navbar-buttons {
+    display: flex;
+    justify-content: flex-end;
 
 }
-.left.carousel-control {
-  right: 30px;
-  left: inherit;
+
+.btn {
+    display: inline-block;
+    height: 35px;
+    width: 100px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out 300ms;
+    transition: all ease-in-out 300ms;
 }
-.carousel-control .glyphicon-chevron-left,
-.carousel-control .glyphicon-chevron-right {
-  font-size: 12px;
-  background-color: #fff;
-  line-height: 30px;
-  text-shadow: none;
-  color: #333;
-  border: 1px solid #ddd;
+
+.btn:hover {
+    text-decoration: underline;
+    color: #000000;
+    background-color: #ffffff;
+}
+
+.nav-item:hover {
+    text-decoration: underline;
+}
+
+.card-btn {
+    background-color: #000000;
+    color: #ffffff;
+    width: 115px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+}
+
+
+.card-btn:hover {
+    text-decoration: underline;
+    color: #000000;
+    background-color: #ffffff;
 }
