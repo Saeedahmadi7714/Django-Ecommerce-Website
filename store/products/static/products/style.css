@@ -8,6 +8,14 @@
     transition: all ease-in-out 300ms;
 }
 
+.btn a {
+    color: #ffffff;
+}
+
+.btn a:hover {
+    color: #000000;
+    background-color: #ffffff;
+}
 
 .card:hover {
     box-shadow: 0px 37px 20px -20px rgba(0, 0, 0, 0.2);

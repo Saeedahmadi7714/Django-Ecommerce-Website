@@ -48,8 +48,12 @@
                 {% else %}
 
                     <div class="col-12 col-xl-4 col-lg-4 col-md-4 col-sm-4 d-flex justify-content-end navbar-buttons ">
-                        <div class="btn">Sign in</div>
-                        <div class="btn">Sign up</div>
+                        <a href="{% url 'customers:sign_up' %}">
+                            <div class="btn">Sign up</div>
+                        </a>
+                        <a href="{% url 'customers:sign_in' %}">
+                            <div class="btn">Sign in</div>
+                        </a>
                         <div class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-cart-fill" viewBox="0 0 16 16">
