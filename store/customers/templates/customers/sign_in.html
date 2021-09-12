@@ -1,1 +1,62 @@
+{% extends 'customers/base.html' %}
+{% load static %}
+{% load bootstrap4 %}
+{% bootstrap_field field %}
 
+{% block css %}
+    <link href="{% static 'customers/style.css' %}" rel='stylesheet'/>{% endblock %}
+{% block title %} Sign in {% endblock %}
+
+{% block content %}
+
+    <div class="row d-flex justify-content-center ">
+        <div class="col-xl-4 mt-6">
+
+
+            <form action="{% url 'customers:sign_in' %}" method='POST'>
+                {% csrf_token %}
+                <div class="row">
+
+                    <div class="col-xl-12">
+                        {% bootstrap_field form.username show_label=True %}
+                    </div>
+
+                    <div class="col-xl-12">
+
+                        <div class="form-group"><label for="id_password">Password</label><input type="password"
+                                                                                                name="password"
+                                                                                                maxlength="128"
+                                                                                                class="form-control"
+                                                                                                placeholder="Password"
+                                                                                                title="" required=""
+                                                                                                id="id_password"></div>
+                    </div>
+
+                </div>
+                <div class="col-lg-12 d-flex justify-content-center mb-3">
+                    <button type="submit" class="btn btn-dark ">Sign in</button>
+                </div>
+            </form>
+
+            <div class="row d-flex justify-content-center">
+
+
+                <div class="col-lg-12 d-flex justify-content-center mb-2">
+                    <a class="btn btn btn-google btn-block-outline"
+                       href="#"><img
+                            src="https://img.icons8.com/color/16/000000/google-logo.png" alt="googleLogin"> Signup Using
+                        Google</a>
+                </div>
+
+                <div class="col-lg-12 d-flex justify-content-center">
+                    <p>No account?</p><a href="{% url 'customers:sign_up' %}">Sign up </a>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
