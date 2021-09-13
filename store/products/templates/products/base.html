@@ -38,6 +38,21 @@
                 </div>
                 {% if user.is_authenticated %}
                     <div class="col-4 navbar-buttons">
+
+                        <div class="d-flex">
+                            <div class="dropdown">
+                                <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ user.username }}
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Profile</a>
+                                    <a class="dropdown-item" href="#">Dashboard</a>
+                                    <a class="dropdown-item" href="{% url 'customers:logout' %}">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-cart-fill" viewBox="0 0 16 16">
