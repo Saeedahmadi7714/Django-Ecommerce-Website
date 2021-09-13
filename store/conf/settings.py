@@ -26,7 +26,6 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'bootstrap4',
-    'crispy_forms',
     'djmoney',
 ]
 
@@ -110,9 +109,6 @@ else:
 # Configurations for media files uploaded by users
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-# Config for login redirect
-LOGIN_URL = '/sign_in/'
 
 # Config for custom user
 AUTH_USER_MODEL = 'customers.Customer'
