@@ -17,9 +17,8 @@ class Customer(AbstractUser):
         'required': _("The last_name must be set."),
     }, )
     phone_number_regex = RegexValidator(regex=r"^\+?1?\d{8,15}$", message=_('Must enter a valid phone number'))
-    phone_number = models.CharField(validators=[phone_number_regex], max_length=16, unique=True
-                                    , help_text=_(
-            'Required'),
+    phone_number = models.CharField(validators=[phone_number_regex], max_length=16, help_text=_(
+        'Required'),
                                     )
     avatar = models.ImageField(upload_to='customers_image', null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
