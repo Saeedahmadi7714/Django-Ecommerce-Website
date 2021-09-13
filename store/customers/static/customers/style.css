@@ -1,3 +1,15 @@
+body {
+    line-height: 1;
+}
+
+.formCol {
+    margin-top: 45px;
+}
+
 #id_avatar {
     height: auto;
+}
+
+.singInCol {
+    margin-top: 13%;
 }
