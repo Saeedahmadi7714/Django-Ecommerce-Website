@@ -1,9 +1,10 @@
-from django import forms
-from .models import Customer
-from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm, )
+from django import (forms, )
+
+from .models import (Customer, )
 
 
-class SignUpForm(forms.ModelForm):
+class SignUpForm(UserCreationForm):
     class Meta:
         model = Customer
         fields = ['first_name', 'last_name', 'username', 'password', 'email', 'phone_number', 'avatar', ]
@@ -12,12 +13,12 @@ class SignUpForm(forms.ModelForm):
 SignUpForm = SignUpForm
 
 
-class SignInForm(forms.Form):
-    username = forms.CharField(label='Username', max_length=150)
-    password = forms.CharField(label='Password', max_length=150, widget=forms.PasswordInput)
-    widgets = {
-        'password': forms.PasswordInput(),
-    }
+class SignInForm(AuthenticationForm):
+    class Meta:
+        model = Customer
 
 
-SignInForm = SignInForm
+class CustomerProfileForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['first_name', 'last_name', 'username', 'email', 'phone_number', 'avatar', ]
