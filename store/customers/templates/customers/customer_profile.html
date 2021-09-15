@@ -70,7 +70,6 @@
     </nav>
     <!-- Close Header -->
 
-
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -89,69 +88,42 @@
         </div>
     </div>
 
-    {#start sign-in form#}
 
-    {% if form.errors %}
-        <div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">
 
-            <h6>Please enter a correct username and password.</h6>
 
+    <div class="col-xl-12">
+        <div class="col-xl-12 d-flex justify-content-center">
+            <img id="avatar" src="{{ user.avatar.url }}" alt="avatar"/>
         </div>
-    {% endif %}
-
-
-
-    <div class="row d-flex justify-content-center formRow ">
-        <div class="col-lg-12 d-flex justify-content-center ">
-
-
-            <form action="{% url 'customers:sign_in' %}" method='POST'>
-                {% csrf_token %}
-
-                <div class="col-xl-12">
-                    {% bootstrap_field form.username show_label=True %}
-                </div>
-
-                <div class="col-xl-12">
-
-                    <div class="form-group"><label for="id_password">Password</label><input type="password"
-                                                                                            name="password"
-                                                                                            maxlength="128"
-                                                                                            class="form-control"
-                                                                                            placeholder="Password"
-                                                                                            title=""
-                                                                                            required=""
-                                                                                            id="id_password">
-                    </div>
-                </div>
-
-
-                <div class="col-xl-12 d-flex justify-content-center mb-3 mt-5">
-                    <button type="submit" class="customButtons btn btn-dark ">Sign in</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-
-
-    <div class="row d-flex justify-content-center">
-        <div class="col-xl-12 d-flex justify-content-center mb-2">
-
-            <a class="btn btn btn-google btn-block-outline"
-               href="#"><img
-                    src="https://img.icons8.com/color/16/000000/google-logo.png" alt="googleLogin">
-                Signin Using
-                Google</a>
-        </div>
-
-
-        <div class="col-lg-12 d-flex justify-content-center">
-            <p>No account?</p><a href="{% url 'customers:sign_up' %}">Sign up </a>
-        </div>
+        <hr>
+        <br>
+        {#                <input type="file" class="text-center center-block file-upload">#}
+        {#                <hr>#}
 
     </div>
+    <div class="col-xl-12 d-flex justify-content-center">
 
-    {#end sing-in form#}
+        <form action="{% url 'customers:profile' %}" method="post">
 
+
+            <div class="col-xl-12">
+                {% bootstrap_field form.first_name show_label=True %}
+            </div>
+            <div class="col-xl-12">
+                {% bootstrap_field form.last_name show_label=True %}
+            </div>
+            <div class="col-xl-12">
+                {% bootstrap_field form.email show_label=True %}
+            </div>
+            <br>
+            <div class="col-xl-12">
+                {% bootstrap_field form.phone_number show_label=True %}
+            </div>
+            <br>
+
+            <div class="col-lg-12 d-flex justify-content-center mb-3">
+                <button type="submit" class="customButtons btn btn-dark ">Sign in</button>
+            </div>
+        </form>
+    </div>
 {% endblock %}
