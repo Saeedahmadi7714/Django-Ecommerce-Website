@@ -1,8 +1,8 @@
-from django.contrib.auth import (get_user_model)
-from django.db import (models)
-from django.utils.translation import gettext_lazy as _
-from customers.models import (Address)
-from products.models import (Product)
+from django.contrib.auth import (get_user_model, )
+from django.db import (models, )
+from django.utils.translation import (gettext_lazy as _, )
+from customers.models import (Address, )
+from products.models import (Product, )
 
 customer = get_user_model()
 
