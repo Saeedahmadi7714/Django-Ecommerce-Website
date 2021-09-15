@@ -1,0 +1,21 @@
+/*
+Custom Css
+*/
+
+.customButtons {
+    background-color: #59ab6e !important;
+    border: 1px solid #59ab6e !important;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.formRow {
+    margin-top: 4%;
+}
+
+#avatar {
+    margin-top: 1%;
+    border-radius: 50%;
+    height: 250px;
+    width: 250px;
+}
