@@ -2,14 +2,26 @@ from django.views.generic import (ListView, DetailView)
 from .models import (Product, Category)
 
 
-class ProductList(ListView):
+class IndexView(ListView):
     model = Product
     queryset = Product.objects.filter(is_active=True)
     context_object_name = 'products'
     template_name = 'products/index.html'
 
     def get_context_data(self, **kwargs):
-        context = super(ProductList, self).get_context_data(**kwargs)
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['categories'] = Category.objects.filter(is_active=True)
+        return context
+
+
+class ShopView(ListView):
+    model = Product
+    queryset = Product.objects.filter(is_active=True)
+    context_object_name = 'products'
+    template_name = 'products/shop.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ShopView, self).get_context_data(**kwargs)
         context['categories'] = Category.objects.filter(is_active=True)
         return context
 
