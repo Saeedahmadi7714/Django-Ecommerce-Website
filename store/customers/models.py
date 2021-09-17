@@ -7,18 +7,8 @@ from conf import settings
 
 
 class Customer(AbstractUser):
-    first_name = models.CharField(_('first name'), max_length=150, help_text=_(
-        'Required. 150 characters or fewer. Letters only.'), error_messages={
-        'required': _("The first_name must be set."),
-    }, )
-
-    last_name = models.CharField(_('last name'), max_length=150, help_text=_(
-        'Required. 150 characters or fewer. Letters only.'), error_messages={
-        'required': _("The last_name must be set."),
-    }, )
     phone_number_regex = RegexValidator(regex=r"^\+?1?\d{8,15}$", message=_('Must enter a valid phone number'))
-    phone_number = models.CharField(validators=[phone_number_regex], max_length=16)
-    avatar = models.ImageField(upload_to='customers_image', null=True, blank=True)
+    phone_number = models.CharField(validators=[phone_number_regex], max_length=16, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
