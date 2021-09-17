@@ -1,10 +1,9 @@
-from django.contrib.auth import (get_user_model, )
 from django.db import (models, )
-from django.utils.translation import (gettext_lazy as _, )
+from django.utils.translation import gettext_lazy as _
+
+from conf import (settings, )
 from customers.models import (Address, )
 from products.models import (Product, )
-
-customer = get_user_model()
 
 
 class Order(models.Model):
@@ -17,7 +16,7 @@ class Order(models.Model):
         (SENT, _('sent')),
     ]
 
-    customer = models.ForeignKey(customer, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     products = models.ManyToManyField(Product)
     status = models.CharField(
@@ -39,7 +38,7 @@ class Order(models.Model):
 
 
 class Discount(models.Model):
-    customer = models.ForeignKey(customer, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     amount = models.PositiveSmallIntegerField()
     created = models.DateTimeField(auto_now_add=True)
     expire_date = models.DateTimeField()
