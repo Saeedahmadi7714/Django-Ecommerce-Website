@@ -7,7 +7,7 @@ from .models import (Customer, )
 class SignUpForm(UserCreationForm):
     class Meta:
         model = Customer
-        fields = ['first_name', 'last_name', 'username', 'password', 'email', 'phone_number', 'avatar', ]
+        fields = ['username', 'password', ]
 
 
 SignUpForm = SignUpForm
@@ -18,7 +18,16 @@ class SignInForm(AuthenticationForm):
         model = Customer
 
 
+class ChangePasswordForm(forms.ModelForm):
+    new_password = forms.CharField(max_length=150)
+    new_password_confirm = forms.CharField(max_length=150)
+
+    class Meta:
+        model = Customer
+        fields = ['password', 'new_password', 'new_password_confirm', ]
+
+
 class CustomerProfileForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ['first_name', 'last_name', 'username', 'email', 'phone_number', 'avatar', ]
+        fields = ['first_name', 'last_name', 'email', 'phone_number', ]
