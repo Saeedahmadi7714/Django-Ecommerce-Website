@@ -8,7 +8,7 @@
     <nav class="navbar navbar-expand-lg navbar-light shadow">
         <div class="container d-flex justify-content-between align-items-center">
 
-            <a class="navbar-brand text-success logo h1 align-self-center" href="{% url 'products:product_list' %}">
+            <a class="navbar-brand text-success logo h1 align-self-center" href="{% url 'products:index' %}">
                 Mars
             </a>
 
@@ -23,13 +23,13 @@
                 <div class="flex-fill">
                     <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'products:product_list' %}">Home</a>
+                            <a class="nav-link" href="{% url 'products:index' %}">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'products:product_list' %}">Shop</a>
+                            <a class="nav-link" href="{% url 'products:shop' %}">Shop</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contact</a>
