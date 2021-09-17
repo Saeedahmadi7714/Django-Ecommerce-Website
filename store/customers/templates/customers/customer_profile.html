@@ -89,83 +89,43 @@
         </div>
     </div>
 
-    {% if user.avatar %}
-        <div class="col-xl-12 d-flex justify-content-center">
 
-            <form action="{% url 'customers:profile' %}" method="post">
-                {% csrf_token %}
+    <div class="col-xl-12 d-flex justify-content-center">
 
-                <div class="col-xl-12 d-flex justify-content-center">
-                    <img id="avatar" src="{{ user.avatar.url }}" alt="avatar"/>
-                </div>
-                <hr>
+        <form action="{% url 'customers:profile' %}" method="POST">
+            {% csrf_token %}
 
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
 
-                <div class="col-xl-12">
+            <div class="col-xl-12">
 
-                    {% bootstrap_field form.first_name show_label=True %}<br>
-                </div>
+                {% bootstrap_field form.first_name show_label=True %}<br>
+            </div>
 
-                <div class="col-xl-12">
+            <div class="col-xl-12">
 
-                    {% bootstrap_field form.last_name show_label=True %}<br>
-                </div>
+                {% bootstrap_field form.last_name show_label=True %}<br>
+            </div>
 
-                <div class="col-xl-12">
-                    {% bootstrap_field form.email show_label=True %}<br>
-                </div>
+            <div class="col-xl-12">
+                {% bootstrap_field form.email show_label=True %}<br>
+            </div>
 
-                <div class="col-xl-12">
-                    {% bootstrap_field form.phone_number show_label=True %}<br>
-                </div>
+            <div class="col-xl-12">
+                {% bootstrap_field form.phone_number show_label=True %}<br>
+            </div>
 
-                <button type="submit" class="customButtons btn btn-dark ">Save changes</button>
+            <button type="submit" class="customButtons btn btn-dark ">Save changes</button>
 
-            </form>
+        </form>
 
-        </div>
-
-
-
-    {% else %}
-
-        <div class="col-xl-12 d-flex justify-content-center">
-
-            <form action="{% url 'customers:profile' %}" method="post">
-                {% csrf_token %}
-
-                {#                <div class="col-xl-12">#}
-                {#                    <img id="avatar" src="{{ user.avatar.url }}" alt="avatar"/>#}
-                {#                </div>#}
-
-
-                <div class="col-xl-12">
-
-                    {% bootstrap_field form.first_name show_label=True %}<br>
-                </div>
-
-                <div class="col-xl-12">
-
-                    {% bootstrap_field form.last_name show_label=True %}<br>
-                </div>
-
-                <div class="col-xl-12">
-                    {% bootstrap_field form.email show_label=True %}<br>
-                </div>
-
-                <div class="col-xl-12">
-                    {% bootstrap_field form.phone_number show_label=True %}<br>
-                </div>
-
-                <button type="submit" class="customButtons btn btn-dark ">Save changes</button>
-
-            </form>
-
-        </div>
-
-
-    {% endif %}
-
+    </div>
 
 
     <!-- Start Footer -->
