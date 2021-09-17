@@ -1,6 +1,6 @@
-from django.db import models
-from djmoney.models.fields import MoneyField
-from django.urls import reverse
+from django.db import (models, )
+from djmoney.models.fields import (MoneyField, )
+from django.urls import (reverse, )
 from django.utils.translation import gettext_lazy as _
 
 
