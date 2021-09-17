@@ -1,5 +1,6 @@
-from rest_framework import serializers
-from customers.models import Customer
+from rest_framework import (serializers, )
+from customers.models import (Customer, )
+from django.utils.translation import gettext_lazy as _
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -9,8 +10,7 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ['first_name', 'last_name', 'username', 'password', 'password_check', 'email', 'phone_number',
-                  'avatar', ]
+        fields = ['username', 'password', 'password_check', ]
 
         extra_kwargs = {
             'password': {'write_only': True},
@@ -18,20 +18,21 @@ class SignUpSerializer(serializers.ModelSerializer):
 
     def save(self):
         new_customer = Customer(
-            first_name=self._validated_data['first_name'],
-            last_name=self._validated_data['last_name'],
             username=self._validated_data['username'],
-            email=self._validated_data['email'],
-            phone_number=self._validated_data['phone_number'],
-            avatar=self.validated_data['avatar']
         )
         password = self.validated_data['password']
         password_check = self.validated_data['password_check']
 
         if password != password_check:
             raise serializers.ValidationError({
-                'password': 'Passwords must match'
+                'password': _('Passwords must match'),
             })
+
+        elif len(password) < 8:
+            raise serializers.ValidationError({
+                'password': _('Your password must be at least 8 characters long.')
+            })
+
         new_customer.set_password(password)
         new_customer.save()
         return new_customer
