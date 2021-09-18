@@ -1,0 +1,20 @@
+DOC = https://pypi.org/project/python-decouple/
+
+1 - Create a .env file near to project settings file
+
+2 - Fill these parameters [ without ' ' ]
+
+
+SECRET_KEY = django secret key or yours
+
+
+DATABASE_NAME = databasename
+DATABASE_USER = database admin username
+DATABASE_PASSWORD = database password
+DATABASE_HOST = database host
+DATABASE_PORT = database port
+
+
+EMAIL_PORT = gmail smtp port
+EMAIL_HOST_USER = email 
+EMAIL_HOST_PASSWORD = email password
