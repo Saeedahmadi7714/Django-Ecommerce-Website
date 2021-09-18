@@ -1,4 +1,6 @@
 from rest_framework import (serializers, )
+from rest_framework.utils.serializer_helpers import ReturnDict
+
 from customers.models import (Customer, )
 from django.utils.translation import gettext_lazy as _
 
@@ -36,3 +38,29 @@ class SignUpSerializer(serializers.ModelSerializer):
         new_customer.set_password(password)
         new_customer.save()
         return new_customer
+
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    """
+    Serializer for password change endpoint.
+    """
+    password = serializers.CharField(required=True, write_only=True, style={
+        'input_type': 'password'
+    })
+
+    new_password = serializers.CharField(required=True, write_only=True, style={
+        'input_type': 'password'
+    })
+    new_password_check = serializers.CharField(required=True, write_only=True, style={
+        'input_type': 'password'
+    })
+
+    class Meta:
+        model = Customer
+        fields = ['password', 'new_password', 'new_password_check', ]
+
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'new_password': {'write_only': True},
+            'new_password_check': {'write_only': True},
+        }
