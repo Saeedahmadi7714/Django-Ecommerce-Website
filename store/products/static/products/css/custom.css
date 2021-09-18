@@ -12,3 +12,12 @@ Custom Css
 .formRow {
     margin-top: 4%;
 }
+
+.profile-link {
+    color: #212934 !important;
+    text-decoration: none;
+}
+
+.profile-link:hover {
+    color: #59ab6e !important;
+}
