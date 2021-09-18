@@ -50,7 +50,11 @@ def customer_profile_view(request):
         return HttpResponse('Form invalid', form.errors)
 
 
-def dashboard_view(request):
+def orders_view(request):
+    pass
+
+
+def addresses_view(request):
     pass
 
 
