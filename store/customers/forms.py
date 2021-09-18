@@ -20,11 +20,11 @@ class SignInForm(AuthenticationForm):
 
 class ChangePasswordForm(forms.ModelForm):
     new_password = forms.CharField(max_length=150)
-    new_password_confirm = forms.CharField(max_length=150)
+    new_password_check = forms.CharField(max_length=150)
 
     class Meta:
         model = Customer
-        fields = ['password', 'new_password', 'new_password_confirm', ]
+        fields = ['password', 'new_password', 'new_password_check', ]
 
 
 class CustomerProfileForm(forms.ModelForm):
