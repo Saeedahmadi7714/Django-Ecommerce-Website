@@ -9,6 +9,9 @@ from django.contrib.auth.views import (PasswordResetView,
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('', include('social_django.urls', namespace='social')),
+
     path('api/v1/', include('api_core.api.urls')),
     path('', include('products.urls')),
     path('customer/', include('customers.urls')),
