@@ -1,4 +1,4 @@
-from django.views.generic import (ListView, DetailView)
+from django.views.generic import (ListView, DetailView, TemplateView)
 from .models import (Product, Category)
 
 
@@ -42,3 +42,11 @@ class ProductByCategory(DetailView):
     def get_queryset(self):
         """Filter products by a category"""
         return self.queryset.filter(category=self.kwargs.get('slug'))
+
+
+class AboutView(TemplateView):
+    template_name = 'products/about.html'
+
+
+class ContactView(TemplateView):
+    template_name = 'products/contact.html'
