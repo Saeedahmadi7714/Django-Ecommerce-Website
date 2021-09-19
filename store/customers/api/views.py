@@ -1,7 +1,7 @@
-from rest_framework.generics import (CreateAPIView, UpdateAPIView, )
-from rest_framework.permissions import (IsAuthenticated, )
+from rest_framework.generics import CreateAPIView, UpdateAPIView
+from rest_framework.permissions import IsAuthenticated
 from .serializers import (SignUpSerializer, ChangePasswordSerializer, )
-from customers.models import (Customer, )
+from customers.models import Customer
 from rest_framework import status
 from rest_framework.response import Response
 
