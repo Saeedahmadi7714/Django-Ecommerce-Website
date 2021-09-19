@@ -25,6 +25,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'bootstrap4',
     'djmoney',
+
+    # Oauth
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -109,6 +112,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 LOGIN_REDIRECT_URL = '/customer/profile/'
 LOGIN_URL = '/customer/sign_in/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Configuration for custom user
 AUTH_USER_MODEL = 'customers.Customer'
@@ -120,3 +124,12 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+# Configuration for sign in with google
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
