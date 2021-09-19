@@ -52,6 +52,7 @@ class Contact(models.Model):
     email = models.EmailField(max_length=150)
     subject = models.SlugField(max_length=100)
     message = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         db_table = _('contacts')
