@@ -1,6 +1,6 @@
-from django.db import (models, )
-from djmoney.models.fields import (MoneyField, )
-from django.urls import (reverse, )
+from django.db import models
+from djmoney.models.fields import MoneyField
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
@@ -45,3 +45,18 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'slug': self.slug})
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=150)
+    email = models.EmailField(max_length=150)
+    subject = models.SlugField(max_length=100)
+    message = models.TextField()
+
+    class Meta:
+        db_table = _('contacts')
+        verbose_name = _('Contact')
+        verbose_name_plural = _('Contacts')
+
+    def __str__(self):
+        return f'{self.name}'
