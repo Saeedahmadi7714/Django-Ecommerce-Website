@@ -127,7 +127,13 @@
     <!-- Start Contact -->
     <div class="container py-5">
         <div class="row py-5">
-            <form class="col-md-9 m-auto" method="post" role="form">
+
+
+            <form class="col-md-9 m-auto" method="post" role="form" id="contactForm">
+
+                <div class="col-xl-12 d-flex justify-content-center" id="error"></div>
+
+
                 {% csrf_token %}
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
@@ -141,7 +147,7 @@
                 </div>
                 <div class="mb-3">
                     <label for="inputsubject">Subject</label>
-                    <input type="text" class="form-control mt-1" id="subject" name="subject" placeholder="Subject">
+                    <input type="text" class="form-control mt-1" name="subject" placeholder="Subject">
                 </div>
                 <div class="mb-3">
                     <label for="inputmessage">Message</label>
@@ -150,10 +156,12 @@
                 </div>
                 <div class="row">
                     <div class="col text-end mt-2">
-                        <button type="submit" class="btn btn-success btn-lg px-3">Let’s Talk</button>
+                        <button type="button" class="btn btn-success btn-lg px-3" id="letsTalkBtn">Let’s Talk</button>
                     </div>
                 </div>
             </form>
+
+
         </div>
     </div>
     <!-- End Contact -->
