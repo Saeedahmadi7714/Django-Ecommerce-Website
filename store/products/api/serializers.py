@@ -10,17 +10,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
     def save(self):
 
-        if self._validated_data['name'] is None:
-            raise serializers.ValidationError({
-                'name': _('Please enter your name'),
-            })
-
-        elif self._validated_data['email'] is None:
-            raise serializers.ValidationError({
-                'email': _('Please enter your email.')
-            })
-
-        elif self._validated_data['subject'] is None:
+        if self._validated_data['subject'] is None:
             raise serializers.ValidationError({
                 'subject': _('Please enter a subject.')
             })
