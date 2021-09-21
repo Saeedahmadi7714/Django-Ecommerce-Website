@@ -4,6 +4,18 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 
+class IPaddress(models.Model):
+    ip_address = models.GenericIPAddressField()
+
+    class Meta:
+        db_table = _('ip_addresses')
+        verbose_name = _('ip_address')
+        verbose_name_plural = _('IPaddress')
+
+    def __str__(self):
+        return f'{self.ip_address}'
+
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=100)
@@ -33,6 +45,7 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     in_stock = models.BooleanField(default=True)
     is_active = models.BooleanField(default=True)
+    views = models.ManyToManyField(IPaddress, blank=True)
 
     class Meta:
         db_table = _('products')
