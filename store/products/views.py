@@ -1,22 +1,29 @@
+from django.db.models import Count
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import (ListView, DetailView, TemplateView)
 from .models import (Product, Category)
 
 
 class IndexView(ListView):
     model = Product
-    queryset = Product.objects.filter(is_active=True)
+
+    # 3 of the most visited products
+    queryset = (Product.objects.filter(is_active=True, in_stock=True).annotate(product_view=Count('views')).order_by(
+        '-product_view')[:3])
+
     context_object_name = 'products'
     template_name = 'products/index.html'
 
+    # 5 of the latest products
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
-        context['categories'] = Category.objects.filter(is_active=True)
+        context['latest'] = Product.objects.filter(is_active=True, in_stock=True).order_by('-created')[:5]
         return context
 
 
 class ShopView(ListView):
     model = Product
-    queryset = Product.objects.filter(is_active=True)
+    queryset = Product.objects.filter(is_active=True, in_stock=True)
     context_object_name = 'products'
     template_name = 'products/shop.html'
 
@@ -28,20 +35,22 @@ class ShopView(ListView):
 
 class ProductDetail(DetailView):
     model = Product
-    queryset = Product.objects.filter(is_active=True)
     context_object_name = 'product'
     template_name = 'products/product_detail.html'
 
+    def get_object(self, queryset=None):
+        slug = self.kwargs.get('slug')
+        product = get_object_or_404(Product, slug=slug)
 
-class ProductByCategory(DetailView):
-    model = Product
-    context_object_name = 'product'
-    template_name = 'products/product_by_category.html'
-    queryset = Product.objects.filter(is_active=True)
+        return product
 
-    def get_queryset(self):
-        """Filter products by a category"""
-        return self.queryset.filter(category=self.kwargs.get('slug'))
+
+def product_by_category(request, category):
+    context = dict()
+    category_id = Category.objects.get(name=category).id
+    product_list = Product.objects.filter(category=category_id, is_active=True, in_stock=True)
+    context['products'] = product_list
+    return render(request, 'products/product_by_category.html', context=context)
 
 
 class AboutView(TemplateView):
