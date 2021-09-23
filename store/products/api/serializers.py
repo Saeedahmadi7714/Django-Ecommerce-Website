@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
-from products.models import Contact
+from products.models import Contact, Product
 
 
 class ContactSerializer(serializers.ModelSerializer):
@@ -28,3 +28,16 @@ class ContactSerializer(serializers.ModelSerializer):
         )
         new_contact.save()
         return new_contact
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['name']
+
+
+class ProductListSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source="category.name", read_only=True)
+
+    class Meta:
+        model = Product
+        fields = ['name', 'category', 'description', 'image', 'price_currency', 'price', 'is_active', 'in_stock', ]
