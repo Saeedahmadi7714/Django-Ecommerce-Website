@@ -41,7 +41,6 @@ class ProductDetail(DetailView):
     def get_object(self, queryset=None):
         slug = self.kwargs.get('slug')
         product = get_object_or_404(Product, slug=slug)
-
         return product
 
 
