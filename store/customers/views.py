@@ -5,10 +5,12 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.views.generic import FormView
-from customers.forms import (SignUpForm, SignInForm,
-                             CustomerProfileForm,
-                             ChangePasswordForm,
-                             AddressForm, )
+from customers.forms import (
+    SignUpForm, SignInForm,
+    CustomerProfileForm,
+    ChangePasswordForm,
+    AddressForm,
+)
 from django.utils.translation import gettext_lazy as _
 
 from customers.models import Address
@@ -57,7 +59,9 @@ def customer_profile_view(request):
 @login_required
 def addresses_view(request):
     context = dict()
+    user_addresses_in_database = Address.objects.filter(customer=request.user)
     context['form'] = AddressForm()
+    context['addresses'] = user_addresses_in_database
 
     if request.method == 'GET':
         return render(request, 'customers/addresses.html', context)
@@ -77,9 +81,11 @@ def addresses_view(request):
                 new_address = Address(
                     customer=request.user,
                     address=address_form.cleaned_data['address'],
-                    postcode=address_form.cleaned_data['postcode'],
-                    city=address_form.cleaned_data['city'],
                     country=address_form.cleaned_data['country'],
+                    state=address_form.cleaned_data['state'],
+                    city=address_form.cleaned_data['city'],
+                    postcode=address_form.cleaned_data['postcode'],
+                    address_type=address_form.cleaned_data['address_type'],
                 )
                 new_address.save()
                 messages.success(request, 'Your address saved.')
