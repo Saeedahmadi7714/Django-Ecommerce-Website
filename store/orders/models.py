@@ -50,4 +50,4 @@ class Discount(models.Model):
         verbose_name_plural = _('Discounts')
 
     def __str__(self):
-        return f'{self.customer}'
+        return f'{self.customer} {self.amount}%'
