@@ -1,13 +1,17 @@
-from django.contrib.auth import (logout, )
-from django.contrib.auth.decorators import (login_required, )
-from django.contrib.auth.views import (LoginView, )
-from django.contrib import (messages, )
-from django.http import (HttpResponse, )
-from django.shortcuts import (redirect, render, )
-from django.views.generic import (FormView, )
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView
+from django.contrib import messages
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.views.generic import FormView
 from customers.forms import (SignUpForm, SignInForm,
-                             CustomerProfileForm, ChangePasswordForm, )
+                             CustomerProfileForm,
+                             ChangePasswordForm,
+                             AddressForm, )
 from django.utils.translation import gettext_lazy as _
+
+from customers.models import Address
 
 
 class SignUpView(FormView):
@@ -50,12 +54,39 @@ def customer_profile_view(request):
         return HttpResponse('Form invalid', form.errors)
 
 
-def orders_view(request):
-    pass
-
-
+@login_required
 def addresses_view(request):
-    pass
+    context = dict()
+    context['form'] = AddressForm()
+
+    if request.method == 'GET':
+        return render(request, 'customers/addresses.html', context)
+
+    else:
+
+        address_form = AddressForm(request.POST)
+        if address_form.is_valid():
+
+            user_addresses_in_database = Address.objects.filter(customer=request.user).count()
+            print(user_addresses_in_database)
+
+            if user_addresses_in_database >= 2:
+                messages.error(request, 'You can not save new address.')
+                return render(request, 'customers/addresses.html', context)
+            else:
+                new_address = Address(
+                    customer=request.user,
+                    address=address_form.cleaned_data['address'],
+                    postcode=address_form.cleaned_data['postcode'],
+                    city=address_form.cleaned_data['city'],
+                    country=address_form.cleaned_data['country'],
+                )
+                new_address.save()
+                messages.success(request, 'Your address saved.')
+                return render(request, 'customers/addresses.html', context)
+
+        messages.error(request, 'Form is invalid.')
+        return render(request, 'customers/addresses.html', context)
 
 
 def logout_view(request):
