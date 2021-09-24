@@ -90,41 +90,138 @@
     </div>
     {#end Modal#}
 
-
-    {#    Address form sets#}
+    {#Start mini nav#}
     <div class="col-xl-12 d-flex justify-content-center">
-
-        <form method="post" action="{% url 'customers:addresses' %}">
-
-            {% if messages %}
-
-                {% for message in messages %}
-
-                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                        <div class="alert alert-success d-flex justify-content-center" role="alert">
-                            {{ message }}
-                        </div>
-
-                    {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
-
-                        <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                            {{ message }}
-                        </div>
-
-
-                    {% endif %}
-
-                {% endfor %}
-            {% endif %}
-
-
-            {% csrf_token %}
-
-            {% bootstrap_form form %}
-            <button class="customButtons btn btn-dark" type="submit">Save Address</button>
-        </form>
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link profile-link" href="{% url 'orders:orders' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link profile-link" href="{% url 'customers:addresses' %}">Addresses</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link profile-link" href="{% url 'customers:change_password' %}">Change
+                                Password</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link profile-link" href="{% url 'customers:logout' %}">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
-    {#    end address form sets#}
+    <hr>
+    {#End mini nav#}
+
+
+    {#    Addresses table#}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Country</th>
+            <th scope="col">State</th>
+            <th scope="col">City</th>
+            <th scope="col">Postcode</th>
+            <th scope="col">Address Line</th>
+            <th scope="col">Address Type</th>
+
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for address in addresses %}
+            <tr>
+                <th scope="row">{{ address.count }}</th>
+                <td>{{ address.country }}</td>
+                <td>{{ address.state }}</td>
+                <td>{{ address.city }}</td>
+                <td>{{ address.postcode }}</td>
+                <td>{{ address.address }}</td>
+                <td>{{ address.address_type }}</td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    {#End addresses table#}
+
+
+    {#    Address form #}
+    <div class="row d-flex justify-content-center">
+        <div class="col-lg-8 d-flex justify-content-center">
+
+            <form id="addressForm" method="post" action="{% url 'customers:addresses' %}">
+                {% csrf_token %}
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                            <div class="alert alert-success d-flex justify-content-center" role="alert">
+                                {{ message }}
+                            </div>
+
+                        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+
+                            <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                                {{ message }}
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+                {% endif %}
+
+
+                <div class="col-xl-10 d-flex justify-content-center" id="error"></div>
+
+                <div class="row">
+
+                    <div class="col-xl-12">
+                        {% bootstrap_field form.address show_label=True %}
+                    </div>
+
+                    <div class="col-xl-6">
+                        {% bootstrap_field form.country show_label=True %}
+                    </div>
+
+                    <div class="col-xl-6">
+                        {% bootstrap_field form.city show_label=True %}
+                    </div>
+
+                    <div class="col-xl-6">
+                        {% bootstrap_field form.state show_label=True %}
+                    </div>
+
+                    <div class="col-xl-6">
+                        {% bootstrap_field form.postcode show_label=True %}
+                    </div>
+
+                    <div class="col-xl-12">
+                        {% bootstrap_field form.address_type show_label=True %}
+                    </div>
+
+                    <div class="col-xl-12 d-flex justify-content-center mt-10">
+
+                        <div class="col-lg-4 ">
+                            <button id="saveAddressBtn" type="submit" class="customButtons btn btn-dark ">Save address
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    {#    End address form#}
 
 
     <!-- Start Footer -->
