@@ -119,35 +119,40 @@
     {#End mini nav#}
 
 
-
-
     <table class="table table-hover">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col"></th>
+            <th scope="col">Order number</th>
+            <th scope="col">Address</th>
+            <th scope="col">Total Price</th>
+            <th scope="col">Price After Discount</th>
+            <th scope="col">Status</th>
+
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
+
+
+        {% for order in orders %}
+
+            <tr>
+                <th scope="row">{{ order.count }}</th>
+
+
+                <td>
+                    <a href="{% url 'customers:order_products' order.id %}">
+                        <button type="button" class="orderTableBtn btn">{{ forloop.counter }}</button>
+                    </a>
+                </td>
+
+
+                <td> {{ order.address.state }} {{ order.address.city }} {{ order.address.address }} </td>
+                <td>{{ order.total_price }}</td>
+                <td>{{ order.total_price_with_discount }}</td>
+                <td>{{ order.status | title }}</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
