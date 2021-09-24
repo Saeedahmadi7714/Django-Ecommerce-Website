@@ -19,20 +19,17 @@ class Customer(AbstractUser):
 
 
 class Address(models.Model):
+    HOME = 'home'
+    OFFICE = 'office'
+    ADDRESS_TYPE = [
+        (HOME, _('home')),
+        (OFFICE, _('office')),
+    ]
+
     # Users can have one or many addresses
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     address = models.CharField(
-        _("Address Line "),
-        max_length=1024,
-    )
-
-    postcode = models.CharField(
-        _("Postcode"),
-        max_length=12,
-    )
-
-    city = models.CharField(
-        _("City"),
+        _("Address"),
         max_length=1024,
     )
 
@@ -40,9 +37,28 @@ class Address(models.Model):
         _("Country"),
         max_length=3,
     )
+
+    state = models.CharField(
+        _("State"),
+        max_length=150,
+    )
+
+    city = models.CharField(
+        _("City"),
+        max_length=150,
+    )
+
+    postcode = models.CharField(
+        _("Postcode"),
+        max_length=12,
+    )
+    address_type = models.CharField(
+        max_length=6,
+        choices=ADDRESS_TYPE,
+        default=HOME
+    )
     created_at = models.DateTimeField(_("Created at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
-    is_default = models.BooleanField(default=False)
 
     class Meta:
         db_table = _("addresses")
