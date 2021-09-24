@@ -1,7 +1,6 @@
-from django.contrib.auth.forms import (AuthenticationForm, UserCreationForm, )
-from django import (forms, )
-
-from .models import (Customer, )
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django import forms
+from .models import Customer, Address
 
 
 class SignUpForm(UserCreationForm):
@@ -32,3 +31,9 @@ class CustomerProfileForm(forms.ModelForm):
     class Meta:
         model = Customer
         fields = ['first_name', 'last_name', 'email', 'phone_number', ]
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        exclude = ['customer', 'created_at', 'updated_at', 'is_default']
