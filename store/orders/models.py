@@ -19,7 +19,7 @@ class Discount(models.Model):
         verbose_name_plural = _('Discounts')
 
     def __str__(self):
-        return f'{self.customer} {self.amount}%'
+        return f'{self.amount}%'
 
 
 class Order(models.Model):
