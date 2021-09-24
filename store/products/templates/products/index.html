@@ -259,7 +259,7 @@
 
                     <div class="col-12 col-md-4 mb-4">
                         <div class="card h-100">
-                            <a href="#">
+                            <a href="{% url 'products:product_detail' product.slug %}">
                                 <img src="{{ product.image.url }}" class="card-img-top"
                                      alt="feature_prod_01">
                             </a>
