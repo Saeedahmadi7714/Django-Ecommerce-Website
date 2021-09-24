@@ -1,8 +1,8 @@
 from django.urls import path
 from .views import (
-    SignUpView, SigninView, logout_view,
-    customer_profile_view, orders_view,
-    order_products_view,
+    SignUpView, SigninView,
+    logout_view, customer_profile_view,
+    OrdersView, order_products_view,
     addresses_view, ChangePasswordView
 )
 
@@ -15,7 +15,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', customer_profile_view, name='profile'),
     path('addresses/', addresses_view, name='addresses'),
-    path('orders/', orders_view, name='orders'),
+    path('orders/', OrdersView.as_view(), name='orders'),
     path('order_products/<int:order_id>/', order_products_view, name='order_products'),
 
 ]
