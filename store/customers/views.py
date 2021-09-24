@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView
 from customers.forms import (
     SignUpForm, SignInForm,
     CustomerProfileForm,
@@ -14,6 +14,7 @@ from customers.forms import (
 from django.utils.translation import gettext_lazy as _
 
 from customers.models import Address
+from orders.models import Order
 
 
 class SignUpView(FormView):
@@ -93,6 +94,26 @@ def addresses_view(request):
 
         messages.error(request, 'Form is invalid.')
         return render(request, 'customers/addresses.html', context)
+
+
+class OrdersView(ListView):
+    model = Order
+    context_object_name = 'orders'
+    template_name = 'customers/orders.html'
+
+    def get_queryset(self):
+        queryset = super(OrdersView, self).get_queryset()
+        queryset = queryset.filter(customer=self.request.user)
+        return queryset
+
+
+@login_required
+def order_products_view(request, order_id):
+    if request.method == 'GET':
+        context = dict()
+        order_products = Order.objects.get(pk=order_id)
+        context['products'] = order_products
+        return render(request, 'customers/order_items.html', context)
 
 
 def logout_view(request):
