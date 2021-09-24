@@ -1,9 +1,25 @@
-from django.db import (models, )
+from django.db import models
 from django.utils.translation import gettext_lazy as _
+from conf import settings
+from customers.models import Address
+from products.models import Product
+from djmoney.models.fields import MoneyField
 
-from conf import (settings, )
-from customers.models import (Address, )
-from products.models import (Product, )
+
+class Discount(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    amount = models.PositiveSmallIntegerField()
+    created = models.DateTimeField(auto_now_add=True)
+    expire_date = models.DateTimeField()
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        db_table = _('discounts')
+        verbose_name = _('Discount')
+        verbose_name_plural = _('Discounts')
+
+    def __str__(self):
+        return f'{self.customer} {self.amount}%'
 
 
 class Order(models.Model):
@@ -26,7 +42,10 @@ class Order(models.Model):
     )
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    total_price = models.PositiveIntegerField()
+    total_price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+    discount = models.OneToOneField(Discount, on_delete=models.RESTRICT)
+    total_price_with_discount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', blank=True,
+                                           null=True)
 
     class Meta:
         db_table = _('orders')
@@ -35,19 +54,3 @@ class Order(models.Model):
 
     def __str__(self):
         return f'{self.customer}'
-
-
-class Discount(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    amount = models.PositiveSmallIntegerField()
-    created = models.DateTimeField(auto_now_add=True)
-    expire_date = models.DateTimeField()
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        db_table = _('discounts')
-        verbose_name = _('Discount')
-        verbose_name_plural = _('Discounts')
-
-    def __str__(self):
-        return f'{self.customer} {self.amount}%'
