@@ -1,5 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.http import HttpResponse
@@ -29,7 +30,7 @@ class SigninView(LoginView):
     redirect_authenticated_user = True
 
 
-class ChangePasswordView(FormView):
+class ChangePasswordView(LoginRequiredMixin, FormView):
     form_class = ChangePasswordForm
     template_name = 'customers/change_password.html'
 
@@ -96,7 +97,7 @@ def addresses_view(request):
         return render(request, 'customers/addresses.html', context)
 
 
-class OrdersView(ListView):
+class OrdersView(LoginRequiredMixin, ListView):
     model = Order
     context_object_name = 'orders'
     template_name = 'customers/orders.html'
