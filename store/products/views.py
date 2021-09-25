@@ -23,7 +23,7 @@ class IndexView(ListView):
 
 class ShopView(ListView):
     model = Product
-    queryset = Product.objects.filter(is_active=True, in_stock=True)
+    queryset = Product.objects.filter(is_active=True, in_stock=True).order_by('-created')[:9]
     context_object_name = 'products'
     template_name = 'products/shop.html'
 
@@ -47,8 +47,10 @@ class ProductDetail(DetailView):
 def product_by_category(request, category):
     context = dict()
     category_id = Category.objects.get(name=category).id
+    categories = Category.objects.filter(is_active=True)
     product_list = Product.objects.filter(category=category_id, is_active=True, in_stock=True)
     context['products'] = product_list
+    context['categories'] = categories
     return render(request, 'products/product_by_category.html', context=context)
 
 
