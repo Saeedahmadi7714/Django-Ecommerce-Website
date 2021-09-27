@@ -17,6 +17,9 @@ class Customer(AbstractUser):
         verbose_name = _('Customer')
         verbose_name_plural = _('Customers')
 
+    def __str__(self):
+        return f'{self.first_name}{self.last_name}'
+
 
 class Address(models.Model):
     HOME = 'home'
@@ -64,3 +67,6 @@ class Address(models.Model):
         db_table = _("addresses")
         verbose_name = _("Address")
         verbose_name_plural = _("Addresses")
+
+    def __str__(self):
+        return f'{self.address}'
