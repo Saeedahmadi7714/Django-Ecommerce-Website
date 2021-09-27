@@ -7,7 +7,8 @@ from djmoney.models.fields import MoneyField
 
 
 class Discount(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
+                                 related_name='discounts')
     amount = models.PositiveSmallIntegerField()
     created = models.DateTimeField(auto_now_add=True)
     expire_date = models.DateTimeField()
@@ -19,7 +20,12 @@ class Discount(models.Model):
         verbose_name_plural = _('Discounts')
 
     def __str__(self):
-        return f'{self.amount}%'
+        return f'{self.customer} {self.amount}%'
+
+
+class OrderItem(models.Model):
+    product = models.ManyToManyField(Product)
+    quantity = models.SmallIntegerField()
 
 
 class Order(models.Model):
@@ -32,9 +38,9 @@ class Order(models.Model):
         (SENT, _('sent')),
     ]
 
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='orders')
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(OrderItem, on_delete=models.RESTRICT)
     status = models.CharField(
         max_length=15,
         choices=STATUS,
