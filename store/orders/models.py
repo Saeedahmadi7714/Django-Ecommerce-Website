@@ -40,7 +40,7 @@ class Order(models.Model):
 
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='orders')
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
-    products = models.ManyToManyField(OrderItem, on_delete=models.RESTRICT)
+    products = models.ManyToManyField(OrderItem)
     status = models.CharField(
         max_length=15,
         choices=STATUS,
