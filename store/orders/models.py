@@ -27,6 +27,14 @@ class OrderItem(models.Model):
     product = models.ManyToManyField(Product)
     quantity = models.SmallIntegerField()
 
+    class Meta:
+        db_table = _('order_item ')
+        verbose_name = _('Order item')
+        verbose_name_plural = _('Order items')
+
+    def __str__(self):
+        return f'{self.product} {self.quantity}'
+
 
 class Order(models.Model):
     READY_TO_SHIP = 'ready_to_ship'
