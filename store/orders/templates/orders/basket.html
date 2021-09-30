@@ -1,4 +1,5 @@
 {% extends 'products/base.html' %}
+{% load subtotal %}
 {% load bootstrap4 %}
 {% bootstrap_field field %}
 {% bootstrap_field form %}
@@ -116,22 +117,22 @@
     </div>
     <hr>
     {#End mini nav#}
-    {##}
-    {#    {% if products_in_basket %}#}
-    {##}
-    {#        {% for product in products_in_basket %}#}
-    {##}
-    {#            {% for product_name,quantity in request.session.basket.items %}#}
-    {##}
-    {#                {% if product.name == product_name %}#}
-    {##}
-    {#                    {{ product.name }}#}
-    {#                    {{ product.image }}#}
-    {#                    {{ product.price }}#}
-    {#                    +{{ quantity }}+<br>#}
-    {#                {% endif %}#}
-    {#            {% endfor %}#}
-    {#        {% endfor %}#}
+
+
+    {% if messages %}
+        <div class="row d-flex justify-content-center">
+            <div class="col-6 alert-col">
+
+                {% for message in messages %}
+                    <div class="alert alert-success d-flex justify-content-center" role="alert">
+                        <h6>{{ message }}</h6>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    {% endif %}
 
 
     {% if products_in_basket %}
@@ -143,7 +144,8 @@
                 <th scope="col">PRODUCT NAME</th>
                 <th scope="col">PRICE</th>
                 <th scope="col">QUANTITY</th>
-                <th scope="col"></th>
+                <th scope="col">SUB TOTAL</th>
+                <th scope="col">UPDATE / DELETE</th>
             </tr>
             </thead>
             <tbody>
@@ -159,10 +161,26 @@
                             </td>
                             <td>{{ product.name }}</td>
                             <td>{{ product.price }}</td>
-                            <td>
-                                <input type="number" id="basket" name="basket"
-                                       min="1" max="100" value="{{ quantity }}">
-                            </td>
+
+                            {#                            Send new quantity and product name for updating#}
+                            <form action="{% url 'orders:basket' %}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_name" value="{{ product.name }}">
+                                <td>
+                                    <input type="number" id="basket" name="product_quantity"
+                                           min="1" max="100" value="{{ quantity }}">
+                                </td>
+
+                                <td>                            {% subtotal_calculator quantity product.price %}
+                                </td>
+
+
+                                <td>
+                                    <button type="submit" class="btn btn-success btn-sm">Update</button>
+                                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </form>
+
                         </tr>
                     {% endif %}
                 {% endfor %}
