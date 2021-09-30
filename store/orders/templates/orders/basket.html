@@ -124,9 +124,19 @@
             <div class="col-6 alert-col">
 
                 {% for message in messages %}
-                    <div class="alert alert-success d-flex justify-content-center" role="alert">
-                        <h6>{{ message }}</h6>
-                    </div>
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+
+                        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                            <h6>{{ message }}</h6>
+                        </div>
+
+
+                    {% else %}
+                        <div class="alert alert-success d-flex justify-content-center" role="alert">
+                            <h6>{{ message }}</h6>
+                        </div>
+
+                    {% endif %}
                 {% endfor %}
 
             </div>
@@ -136,7 +146,7 @@
 
 
     {% if products_in_basket %}
-
+        {#Start basket table#}
         <table class="table table-sm">
             <thead>
             <tr>
@@ -155,29 +165,38 @@
 
                     {% if product.name == product_name %}
 
-                        <tr>
+                        <tr id="{{ product.id }}">
+
                             <td><img class="productImage" src="/media/{{ product.image }}"
                                      alt="{{ product.slug }} image"/>
                             </td>
+
                             <td>{{ product.name }}</td>
+
                             <td>{{ product.price }}</td>
 
-                            {#                            Send new quantity and product name for updating#}
+                            {#Send new quantity and product name for updating#}
                             <form action="{% url 'orders:basket' %}" method="POST">
                                 {% csrf_token %}
-                                <input type="hidden" name="product_name" value="{{ product.name }}">
+                                <input type="hidden" class="product_name" name="product_name"
+                                       value="{{ product.name }}">
                                 <td>
                                     <input type="number" id="basket" name="product_quantity"
-                                           min="1" max="100" value="{{ quantity }}">
+                                           min="1" max="101" value="{{ quantity }}">
                                 </td>
 
-                                <td>                            {% subtotal_calculator quantity product.price %}
-                                </td>
-
-
+                                <td>{% subtotal_calculator quantity product.price %}</td>
                                 <td>
-                                    <button type="submit" class="btn btn-success btn-sm">Update</button>
-                                    <button type="button" class="btn btn-danger btn-sm">Delete</button>
+
+                                    {#                                    Update  button#}
+                                    <button type="submit" id="updateItemBtn" class="btn btn-success btn-sm">Update
+                                    </button>
+
+                                    {#                                    Delete item from basket button#}
+                                    <button type="button" id="{{ product.id }}"
+                                            class="btn btn-danger btn-sm deleteItemBtn">Delete
+                                    </button>
+
                                 </td>
                             </form>
 
@@ -189,11 +208,26 @@
             </tbody>
         </table>
 
+        {#    Checkout button#}
+
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-2 d-flex justify-content-center">
+                <a href="{% url 'orders:checkout' %}">
+                    <button type="button" class="btn btn-success checkOutBtn">CHECK OUT</button>
+                </a>
+            </div>
+        </div>
+
+        {#    End checkout button#}
+
     {% else %}
         <h3 class="d-flex justify-content-center">
             Your basket is empty &#128513;
         </h3>
     {% endif %}
+    {#End basket#}
+
+
 
     <!-- Start Footer -->
     <footer class="bg-dark" id="tempaltemo_footer">
