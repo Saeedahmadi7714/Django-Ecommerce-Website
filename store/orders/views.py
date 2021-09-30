@@ -8,7 +8,7 @@ def basket_view(request):
     if request.method == 'GET':
 
         if request.session.get('basket'):
-            basket = request.session['basket']
+            basket = request.session.get('basket')
             product_names = basket.keys()
             context['products_in_basket'] = Product.objects.filter(name__in=product_names)
             return render(request, 'orders/basket.html', context)
@@ -23,16 +23,14 @@ def basket_view(request):
         request.session['basket'] = {
             product_name: product_quantity
         }
-
-        print(request.session.get('basket'), 2)
         context['products_in_basket'] = Product.objects.filter(name=product_name)
         return render(request, 'orders/basket.html', context)
 
     else:
 
-        basket = request.session['basket']
+        basket = request.session.get('basket')
         basket[product_name] = product_quantity
+        request.session.modified = True
         product_names = basket.keys()
-        print(basket, 3)
         context['products_in_basket'] = Product.objects.filter(name__in=product_names)
         return render(request, 'orders/basket.html', context)
