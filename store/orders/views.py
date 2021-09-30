@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 from products.models import Product
-from django.views.decorators.csrf import csrf_exempt
 
 
 def basket_view(request):
@@ -53,7 +52,6 @@ def basket_view(request):
         return render(request, 'orders/basket.html', context)
 
 
-@csrf_exempt
 def delete_item_from_basket(request):
     """
     Takes the product ID and removes it from the basket
