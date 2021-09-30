@@ -225,7 +225,6 @@ $(document).ready(function () {
     $(".deleteItemBtn").unbind().click(function () {
 
         const productId = $(this).attr("id")
-        $(`table tr#${productId}`).remove();
 
         const $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
         console.log($crf_token)
