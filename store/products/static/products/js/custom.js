@@ -199,9 +199,6 @@ $(document).ready(function () {
                     console.log(result[each])
                 }
 
-                // console.log(e['results'])
-                // console.log(category)
-                // console.log(count)
             },
 
             error: function (error) {
@@ -213,3 +210,47 @@ $(document).ready(function () {
     });
 });
 
+// Set hidden input quantity value
+$(document).ready(function () {
+    $("#var-value").on('DOMSubtreeModified', function () {
+        $('#product_quantity').val(`${$("#var-value").text()}`)
+
+    });
+});
+
+
+// Delete an item from user basket
+$(document).ready(function () {
+
+    $(".deleteItemBtn").unbind().click(function () {
+
+        const productId = $(this).attr("id")
+        $(`table tr#${productId}`).remove();
+
+        const $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
+        console.log($crf_token)
+        const formData = new FormData(); // Create form data here
+        formData.append('productId', productId);
+
+        $.ajax({
+            type: "POST",
+            // Adding CSRFToken to headers
+            headers: {"X-CSRFToken": $crf_token},
+            url: "/order/basket/delete/",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function () {
+                console.log("SUCCESS :");
+                $(`table tr#${productId}`).remove();
+
+            },
+            error: function (error) {
+                console.log("ERROR : ", error);
+            }
+        });
+
+    });
+});
