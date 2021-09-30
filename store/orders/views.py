@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render
 
 from products.models import Product
@@ -27,10 +28,13 @@ def basket_view(request):
         return render(request, 'orders/basket.html', context)
 
     else:
-
         basket = request.session.get('basket')
         basket[product_name] = product_quantity
         request.session.modified = True
         product_names = basket.keys()
+
+        messages.success(request, 'Your cart has been updated.')
+
+        print(request.session.get('basket'))
         context['products_in_basket'] = Product.objects.filter(name__in=product_names)
         return render(request, 'orders/basket.html', context)
