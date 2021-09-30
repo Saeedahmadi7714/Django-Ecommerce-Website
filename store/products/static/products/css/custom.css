@@ -33,3 +33,11 @@ Custom Css
     width: 75px;
     height: 75px;
 }
+
+.productDetailBtn {
+    width: 100%;
+}
+
+.checkOutBtn {
+    margin-bottom: 15px
+}
