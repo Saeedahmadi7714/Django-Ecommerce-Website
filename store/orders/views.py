@@ -25,6 +25,12 @@ def basket_view(request):
     product_quantity = request.POST.get('product_quantity')
 
     if not request.session.get('basket'):
+        number_of_products_is_stock = Product.objects.get(name=product_name).number_of_product
+        if int(product_quantity) > number_of_products_is_stock or int(product_quantity) > 100:
+            messages.error(request, 'More than inventory.')
+            # Empty basket
+            return render(request, 'orders/basket.html')
+
         # Adding product to the basket for the first time
         request.session['basket'] = {
             product_name: product_quantity
