@@ -1,7 +1,11 @@
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import (ListView, DetailView, TemplateView)
-from .models import (Product, Category)
+from .models import Product, Category
+from django.views.generic import (
+    ListView,
+    DetailView,
+    TemplateView,
+)
 
 
 class IndexView(ListView):
