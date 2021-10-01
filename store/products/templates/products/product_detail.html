@@ -10,17 +10,12 @@
                     <i class="fa fa-envelope mx-2"></i>
                     <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:saeedahmadi7714@gmail.com">saeedahmadi7714@gmail.com</a>
                     <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">+98 910 762 59
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:+98-910-762-5968">+98 910 762
+                        59
                         68</a>
                 </div>
                 <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
-                            class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
-                            class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i
-                            class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i
+                    <a class="text-light" href="https://www.linkedin.com/saeed-ahmadi7714/" target="_blank"><i
                             class="fab fa-linkedin fa-sm fa-fw"></i></a>
                 </div>
             </div>
@@ -76,7 +71,7 @@
                         <i class="fa fa-fw fa-search text-dark mr-2"></i>
                     </a>
 
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
+                    <a class="nav-icon position-relative text-decoration-none" href="{% url 'orders:basket' %}">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
                         <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
                     </a>
@@ -137,18 +132,61 @@
 
                             <h6>Description:</h6>
                             <p>{{ product.description }}</p>
+
+
                             <div class="row pb-3">
-                                <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-sm productDetailBtn" name="submit" value="buy">
-                                        Buy
-                                    </button>
-                                </div>
-                                <div class="col d-grid">
-                                    <button type="submit" class="btn btn-success btn-sm productDetailBtn" name="submit"
-                                            value="addtocard">Add To Cart
-                                    </button>
-                                </div>
+
+                                <form action="{% url 'orders:basket' %}" method="POST">
+                                    {% csrf_token %}
+
+                                    <input type="hidden" name="product_name" value="{{ product.name }}">
+
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <ul class="list-inline pb-3">
+                                                <li class="list-inline-item text-right">
+                                                    Quantity
+                                                    <input type="hidden" name="product_quantity"
+                                                           id="product_quantity"
+                                                           value="1">
+                                                </li>
+                                                <li class="list-inline-item"><span class="btn btn-success"
+                                                                                   id="btn-minus">-</span></li>
+                                                <li class="list-inline-item"><span name="qqq" class="badge bg-secondary"
+                                                                                   id="var-value">1</span></li>
+                                                <li class="list-inline-item"><span class="btn btn-success"
+                                                                                   id="btn-plus">+</span></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 justify-content-between d-flex ">
+
+                                        <div class="col-4 d-grid">
+                                            <a href="#">
+                                                <button type="submit" class="btn btn-success btn-sm productDetailBtn"
+                                                        name="submit"
+                                                        value="buy">
+                                                    Buy
+                                                </button>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-4 d-grid">
+                                            <a href="#">
+                                                <button type="submit" class="btn btn-success btn-sm productDetailBtn"
+                                                        name="addToBasket"
+                                                        value="addtocard">Add To Cart
+                                                </button>
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                </form>
+
                             </div>
+                            {#                            End form row#}
                         </div>
                     </div>
                 </div>
@@ -174,7 +212,7 @@
                         </li>
                         <li>
                             <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">+98 910 762 59 68</a>
+                            <a class="text-decoration-none" href="tel:+98-910-762-5968">+98 910 762 59 68</a>
                         </li>
                         <li>
                             <i class="fa fa-envelope fa-fw"></i>
