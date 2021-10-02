@@ -25,7 +25,7 @@ class Discount(models.Model):
 
 
 class OrderItem(models.Model):
-    product = models.ManyToManyField(Product)
+    product_name = models.CharField(max_length=150)
     quantity = models.SmallIntegerField()
 
     class Meta:
