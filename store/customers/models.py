@@ -1,7 +1,7 @@
-from django.db import (models)
-from django.contrib.auth.models import (AbstractUser)
+from django.db import models
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
-from django.core.validators import (RegexValidator)
+from django.core.validators import RegexValidator
 
 from conf import settings
 
@@ -25,8 +25,8 @@ class Address(models.Model):
     HOME = 'home'
     OFFICE = 'office'
     ADDRESS_TYPE = [
-        (HOME, _('home')),
-        (OFFICE, _('office')),
+        (HOME, _('Home')),
+        (OFFICE, _('Office')),
     ]
 
     # Users can have one or many addresses
