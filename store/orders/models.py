@@ -59,7 +59,7 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     total_price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
-    discount = models.OneToOneField(Discount, on_delete=models.RESTRICT)
+    discount = models.OneToOneField(Discount, on_delete=models.RESTRICT, null=True, blank=True)
     total_price_with_discount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', blank=True,
                                            null=True)
 
