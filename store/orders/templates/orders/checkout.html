@@ -131,18 +131,24 @@
             {% csrf_token %}
 
             <div class="col-12 d-flex justify-content-center">
-                <div class="col-6 d-flex justify-content-center"><input type="text" id="offerCode" placeholder="Offer code?"></div>
+                <div class="col-6 d-flex justify-content-center"><input type="text" id="offerCode"
+                                                                        placeholder="Offer code?" name="offer_code">
+                </div>
                 <div class="col-6 d-flex justify-content-center">
-                    <button class="btn btn-danger btn-sm applyBtn" type="submit">Apply</button>
+                    <button class="btn btn-danger btn-sm applyBtn" type="button">Apply</button>
                 </div>
             </div>
 
-            <div class="col-12 d-flex justify-content-center mt-5" >
+            <div class="col-12 d-flex justify-content-center mt-5">
                 <div class="col-6 d-flex justify-content-center">
-                    <p>Total Price : ${{ total_price }}</p>
+                    <p>
+                        <mark class="paymentMark">Total Price : ${{ total_price }}</mark>
+                    </p>
                 </div>
                 <div class="col-6  d-flex justify-content-center">
-                    <p>Products in basket : {{ request.session.basket | length }}</p>
+                    <p>
+                        <mark class="paymentMark">Products in basket : {{ request.session.basket | length }}</mark>
+                    </p>
                 </div>
             </div>
 
@@ -235,6 +241,13 @@
 
             {#        Start Delivery Speed#}
             <div class="col-12 d-flex justify-content-center mt-4">
+
+                <p>
+                    Delivery method
+                </p>
+            </div>
+            <div class="col-12 d-flex justify-content-center mt-4">
+
                 <div class="col-8 d-flex justify-content-center">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="delivery_method" id="standard"
