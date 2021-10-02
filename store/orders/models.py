@@ -34,7 +34,7 @@ class OrderItem(models.Model):
         verbose_name_plural = _('Order items')
 
     def __str__(self):
-        return f'{self.product} {self.quantity}'
+        return f'{self.product_name} {self.quantity}'
 
 
 class Order(models.Model):
