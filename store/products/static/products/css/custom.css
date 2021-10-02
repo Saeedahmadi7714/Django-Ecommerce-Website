@@ -55,3 +55,7 @@ select {
 #offerCode {
     width: 100px;
 }
+
+.paymentMark {
+    background-color: #59ab6e !important;
+}
