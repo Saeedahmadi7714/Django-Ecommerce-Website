@@ -1,7 +1,12 @@
+import timeit
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render
+from customers.models import Address
+from orders.models import Discount, Order
 from products.models import Product
 
 
@@ -72,5 +77,57 @@ def delete_item_from_basket(request):
 
 @login_required
 def checkout(request):
-    print(request.session.get('basket'))
-    return HttpResponse('Fuck You :D')
+    if request.method == 'GET':
+        context = dict()
+        customer = request.user
+        addresses = Address.objects.filter(customer=customer)
+        basket = request.session.get('basket')
+        product_names = basket.keys()
+        total_price = Product.objects.filter(name__in=product_names).aggregate(Sum('price'))
+        context['total_price'] = total_price['price__sum']
+        context['addresses'] = addresses
+        return render(request, 'orders/checkout.html', context)
+
+    print(request.POST)
+
+    # If the user has an address registered in the database and uses it to pay an order
+    if 'address_id' in request.POST:
+        basket = request.session.get('basket')
+        product_names = basket.keys()
+        delivery_method = request.POST.get('delivery_method')
+        total_price = Product.objects.filter(name__in=product_names).aggregate(Sum('price'))['price__sum']
+
+        if delivery_method == 'standard':
+            total_price = total_price
+        elif delivery_method == 'expedited':
+            total_price += 15
+        elif delivery_method == 'priority':
+            total_price += 30
+
+        customer = request.user
+        address = Address.objects.get(id=request.POST.get('address_id'))
+
+        # If user have an offer code
+        if request.POST.get('offer_code'):
+            discount = Discount.objects.get(code=request.POST.get('offer_code'))
+            total_price_with_discount = (total_price * int(discount.amount)) / 100
+            total_price_with_discount = total_price - total_price_with_discount
+        else:
+            discount = None
+            total_price_with_discount = total_price
+
+        order = Order(
+            customer=customer,
+            address=address,
+            delivery_method=delivery_method,
+            total_price=total_price,
+            discount=discount,
+            total_price_with_discount=total_price_with_discount
+        )
+        order.save()
+
+        [order.products.create(product_name=product_name, quantity=quantity) for product_name, quantity in
+         basket.items()]
+
+        del request.session['basket']
+        return render(request, 'orders/checkout_complete.html')
