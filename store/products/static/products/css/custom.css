@@ -39,5 +39,19 @@ Custom Css
 }
 
 .checkOutBtn {
-    margin-bottom: 15px
+    margin-bottom: 15px;
+}
+
+select {
+    width: 400px;
+    text-align-last: center;
+}
+
+.applyBtn {
+    width: 100px;
+    height: 35px;
+}
+
+#offerCode {
+    width: 100px;
 }
