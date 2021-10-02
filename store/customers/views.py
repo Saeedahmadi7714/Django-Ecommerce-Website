@@ -74,7 +74,6 @@ def addresses_view(request):
         if address_form.is_valid():
 
             user_addresses_in_database = Address.objects.filter(customer=request.user).count()
-            print(user_addresses_in_database)
 
             if user_addresses_in_database >= 2:
                 messages.error(request, 'You can not save new address.')
