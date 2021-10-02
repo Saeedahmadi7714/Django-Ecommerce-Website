@@ -9,6 +9,7 @@ from djmoney.models.fields import MoneyField
 class Discount(models.Model):
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True,
                                  related_name='discounts')
+    code = models.CharField(max_length=50)
     amount = models.PositiveSmallIntegerField()
     created = models.DateTimeField(auto_now_add=True)
     expire_date = models.DateTimeField()
