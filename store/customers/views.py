@@ -5,7 +5,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.views.generic import FormView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import FormView, ListView, DeleteView
 from customers.forms import (
     SignUpForm, SignInForm,
     CustomerProfileForm,
@@ -45,11 +46,10 @@ def customer_profile_view(request):
 
     elif request.method == 'POST':
 
-        form = CustomerProfileForm(request.POST, request.FILES, instance=request.user)
+        form = CustomerProfileForm(request.POST, instance=request.user)
 
         if form.is_valid():
             form.save()
-            print(request.user.username)
             context = dict()
             context['form'] = CustomerProfileForm(instance=request.user)
             messages.success(request, _('Profile details updated successfully.'))
@@ -69,31 +69,39 @@ def addresses_view(request):
         return render(request, 'customers/addresses.html', context)
 
     else:
-
         address_form = AddressForm(request.POST)
+
         if address_form.is_valid():
+            obj, created = Address.objects.update_or_create(
 
-            user_addresses_in_database = Address.objects.filter(customer=request.user).count()
+                # Get address if exist
+                id=request.POST.get('address_id'),
 
-            if user_addresses_in_database >= 2:
-                messages.error(request, 'You can not save new address.')
-                return render(request, 'customers/addresses.html', context)
+                # Create or update address
+                defaults={'customer': request.user,
+                          'address': address_form.cleaned_data['address'],
+                          'country': address_form.cleaned_data['country'],
+                          'state': address_form.cleaned_data['state'],
+                          'city': address_form.cleaned_data['city'],
+                          'postcode': address_form.cleaned_data['postcode'],
+                          'address_type': address_form.cleaned_data['address_type'],
+                          },
+            )
+
+            if created:
+                messages.success(request, 'Your address has been saved.')
             else:
-                new_address = Address(
-                    customer=request.user,
-                    address=address_form.cleaned_data['address'],
-                    country=address_form.cleaned_data['country'],
-                    state=address_form.cleaned_data['state'],
-                    city=address_form.cleaned_data['city'],
-                    postcode=address_form.cleaned_data['postcode'],
-                    address_type=address_form.cleaned_data['address_type'],
-                )
-                new_address.save()
-                messages.success(request, 'Your address saved.')
-                return render(request, 'customers/addresses.html', context)
+                messages.success(request, 'Your address successfully updated.')
+
+            return render(request, 'customers/addresses.html', context)
 
         messages.error(request, 'Form is invalid.')
         return render(request, 'customers/addresses.html', context)
+
+
+class DeleteUserAddress(DeleteView):
+    model = Address
+    success_url = reverse_lazy('customers:addresses')
 
 
 class OrdersView(LoginRequiredMixin, ListView):
