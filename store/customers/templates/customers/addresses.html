@@ -54,7 +54,8 @@
 
                     <a class="nav-icon position-relative text-decoration-none" href="{% url 'orders:basket' %}">
                         <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span id="basketBadge" class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+                        <span id="basketBadge"
+                              class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
                     </a>
 
                     <a class="nav-icon position-relative text-decoration-none" href="#">
@@ -127,8 +128,10 @@
             <th scope="col">State</th>
             <th scope="col">City</th>
             <th scope="col">Postcode</th>
-            <th scope="col">Address Line</th>
-            <th scope="col">Address Type</th>
+            <th scope="col">Address</th>
+            <th scope="col">Address</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
 
 
         </tr>
@@ -136,13 +139,84 @@
         <tbody>
         {% for address in addresses %}
             <tr>
-                <th scope="row">{{ address.count }}</th>
-                <td>{{ address.country }}</td>
-                <td>{{ address.state }}</td>
-                <td>{{ address.city }}</td>
-                <td>{{ address.postcode }}</td>
-                <td>{{ address.address }}</td>
-                <td>{{ address.address_type }}</td>
+                <form id="addressForm" method="post" action="{% url 'customers:addresses' %}">
+                    {% csrf_token %}
+
+                    <th scope="row">{{ address.count }}</th>
+
+                    <input type="hidden" name="address_id" value="{{ address.id }}">
+
+                    <td class="countryTd">
+                        <input type="text" name="country" maxlength="3" class="form-control"
+                               placeholder="{{ address.country }}"
+                               title="" required="" id="id_country">
+                    </td>
+
+
+                    <td><input type="text" name="state" maxlength="150" class="form-control"
+                               placeholder="{{ address.state }}"
+                               title="" required="" id="id_state"></td>
+
+                    <td>
+                        <input type="text" name="city" maxlength="150" class="form-control"
+                               placeholder="{{ address.city }}" title=""
+                               required="" id="id_city">
+                    </td>
+
+                    <td>
+                        <input type="text" name="postcode" maxlength="12" class="form-control"
+                               placeholder={{ address.postcode }}
+                                       title="" required="" id="id_postcode">
+                    </td>
+
+                    <td><input type="text" name="address" maxlength="1024" class="form-control"
+                               placeholder="{{ address.address }}"
+                               title="" required="" id="id_address"></td>
+
+                    <td>
+
+                        <select name="address_type" class="form-control" title="" id="id_address_type">
+
+                            {% if address.address_type == 'other' %}
+
+                                <option value="other" selected="">Other</option>
+                                <option value="home">Home</option>
+                                <option value="office">Office</option>
+
+                            {% elif address.address_type == 'office' %}
+
+                                <option value="office" selected="">Office</option>
+                                <option value="home">Home</option>
+                                <option value="other">Other</option>
+
+                            {% else %}
+
+                                <option value="home" selected="">Home</option>
+                                <option value="office">Office</option>
+                                <option value="other">Other</option>
+
+                            {% endif %}
+
+                        </select>
+
+                    </td>
+
+                    <td>
+                        <button class="btn btn-success btn-sm" type="submit">
+                            UPDATE
+                        </button>
+                    </td>
+                </form>
+
+                {#            Delete address#}
+                <form id="addressForm" method="post" action="{% url 'customers:delete_address' address.id %}">
+                    {% csrf_token %}
+                    <td>
+                        <button class="btn btn-danger btn-sm" type="submit">
+                            DELETE
+                        </button>
+                    </td>
+                </form>
             </tr>
         {% endfor %}
 
@@ -152,74 +226,102 @@
 
 
     {#    Address form #}
-    <div class="row d-flex justify-content-center">
-        <div class="col-lg-8 d-flex justify-content-center">
+    {#    The user can have 3 addresses#}
+    {% if addresses|length >= 3 %}
 
-            <form id="addressForm" method="post" action="{% url 'customers:addresses' %}">
-                {% csrf_token %}
-                {% if messages %}
+        {% if messages %}
 
-                    {% for message in messages %}
+            {% for message in messages %}
 
-                        {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
-                            <div class="alert alert-success d-flex justify-content-center" role="alert">
-                                {{ message }}
-                            </div>
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                    <div class="alert alert-success d-flex justify-content-center" role="alert">
+                        {{ message }}
+                    </div>
 
-                        {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
 
-                            <div class="alert alert-danger d-flex justify-content-center" role="alert">
-                                {{ message }}
-                            </div>
+                    <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                        {{ message }}
+                    </div>
 
-                        {% endif %}
-
-                    {% endfor %}
                 {% endif %}
 
+            {% endfor %}
+        {% endif %}
 
-                <div class="col-xl-10 d-flex justify-content-center" id="error"></div>
 
-                <div class="row">
+    {% else %}
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-8 d-flex justify-content-center">
 
-                    <div class="col-xl-12">
-                        {% bootstrap_field form.address show_label=True %}
-                    </div>
+                <form id="addressForm" method="post" action="{% url 'customers:addresses' %}">
+                    {% csrf_token %}
+                    {% if messages %}
 
-                    <div class="col-xl-6">
-                        {% bootstrap_field form.country show_label=True %}
-                    </div>
+                        {% for message in messages %}
 
-                    <div class="col-xl-6">
-                        {% bootstrap_field form.city show_label=True %}
-                    </div>
+                            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                <div class="alert alert-success d-flex justify-content-center" role="alert">
+                                    {{ message }}
+                                </div>
 
-                    <div class="col-xl-6">
-                        {% bootstrap_field form.state show_label=True %}
-                    </div>
+                            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
 
-                    <div class="col-xl-6">
-                        {% bootstrap_field form.postcode show_label=True %}
-                    </div>
+                                <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                                    {{ message }}
+                                </div>
 
-                    <div class="col-xl-12">
-                        {% bootstrap_field form.address_type show_label=True %}
-                    </div>
+                            {% endif %}
 
-                    <div class="col-xl-12 d-flex justify-content-center mt-10">
+                        {% endfor %}
+                    {% endif %}
 
-                        <div class="col-lg-4 ">
-                            <button id="saveAddressBtn" type="submit" class="customButtons btn btn-dark ">Save address
-                            </button>
+
+
+                    <div class="col-xl-10 d-flex justify-content-center" id="error"></div>
+
+                    <div class="row">
+
+                        <div class="col-xl-12">
+                            {% bootstrap_field form.address show_label=True %}
                         </div>
 
+                        <div class="col-xl-6">
+                            {% bootstrap_field form.country show_label=True %}
+                        </div>
+
+                        <div class="col-xl-6">
+                            {% bootstrap_field form.city show_label=True %}
+                        </div>
+
+                        <div class="col-xl-6">
+                            {% bootstrap_field form.state show_label=True %}
+                        </div>
+
+                        <div class="col-xl-6">
+                            {% bootstrap_field form.postcode show_label=True %}
+                        </div>
+
+                        <div class="col-xl-12">
+                            {% bootstrap_field form.address_type show_label=True %}
+                        </div>
+
+                        <div class="col-xl-12 d-flex justify-content-center mt-10">
+
+                            <div class="col-lg-4 ">
+                                <button id="saveAddressBtn" type="submit" class="customButtons btn btn-dark ">Save
+                                    address
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
-                </div>
 
-            </form>
+                </form>
 
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     {#    End address form#}
 
