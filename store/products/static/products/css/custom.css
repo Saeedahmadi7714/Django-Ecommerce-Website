@@ -59,3 +59,7 @@ select {
 .paymentMark {
     background-color: #59ab6e !important;
 }
+
+.countryTd {
+    width: 100px;
+}
