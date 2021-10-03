@@ -24,9 +24,11 @@ class Customer(AbstractUser):
 class Address(models.Model):
     HOME = 'home'
     OFFICE = 'office'
+    OTHER = 'other'
     ADDRESS_TYPE = [
         (HOME, _('Home')),
         (OFFICE, _('Office')),
+        (OTHER, _('Other')),
     ]
 
     # Users can have one or many addresses
