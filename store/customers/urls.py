@@ -2,7 +2,7 @@ from django.urls import path
 from .views import (
     SignUpView, SigninView,
     logout_view, customer_profile_view,
-    OrdersView, order_products_view,
+    OrdersView, order_items_view,
     addresses_view, ChangePasswordView,
     DeleteUserAddress,
 )
@@ -18,6 +18,6 @@ urlpatterns = [
     path('addresses/', addresses_view, name='addresses'),
     path('delete_address/<int:pk>/', DeleteUserAddress.as_view(), name='delete_address'),
     path('orders/', OrdersView.as_view(), name='orders'),
-    path('order_products/<int:order_id>/', order_products_view, name='order_products'),
+    path('order_items/<int:order_id>/', order_items_view, name='order_items'),
 
 ]
