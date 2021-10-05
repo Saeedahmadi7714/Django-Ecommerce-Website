@@ -1,6 +1,10 @@
 Django==3.2.7
 djangorestframework==3.12.4
-django-mptt~=0.13.3asgiref==3.4.1
+django-bootstrap4==3.0.1
+django-money==2.0.3
+Pillow==8.3.2
+psycopg2==2.9.1
+asgiref==3.4.1
 Babel==2.9.1
 beautifulsoup4==4.9.3
 certifi==2021.5.30
@@ -15,6 +19,7 @@ django-bootstrap4==3.0.1
 django-js-asset==1.2.2
 django-money==2.0.3
 djangorestframework==3.12.4
+filter-and-pagination==1.1.14
 idna==3.2
 inflection==0.5.1
 itypes==1.2.0
