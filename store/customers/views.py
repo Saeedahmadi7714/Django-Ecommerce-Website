@@ -1,22 +1,23 @@
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
-from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, ListView, DeleteView
+
 from customers.forms import (
     SignUpForm, SignInForm,
     CustomerProfileForm,
     ChangePasswordForm,
     AddressForm,
 )
-from django.utils.translation import gettext_lazy as _
-
 from customers.models import Address
 from orders.models import Order
+from products.models import Product
 
 
 class SignUpView(FormView):
@@ -116,11 +117,13 @@ class OrdersView(LoginRequiredMixin, ListView):
 
 
 @login_required
-def order_products_view(request, order_id):
+def order_items_view(request, order_id):
     if request.method == 'GET':
         context = dict()
-        order_products = Order.objects.get(pk=order_id)
-        context['products'] = order_products
+        order = Order.objects.get(id=order_id).products.all()
+        order_products = [Product.objects.get(name=product_name) for product_name in order]
+        context['order'] = order
+        context['order_product'] = order_products
         return render(request, 'customers/order_items.html', context)
 
 
