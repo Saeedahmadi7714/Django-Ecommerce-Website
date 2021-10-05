@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import OfferCodeApiView
+from .views import offer_code_api_view
 
 urlpatterns = [
-    path('offer_code/', OfferCodeApiView.as_view(), name='offer_code_api'),
+    path('offer_code/', offer_code_api_view, name='offer_code_api'),
 ]
