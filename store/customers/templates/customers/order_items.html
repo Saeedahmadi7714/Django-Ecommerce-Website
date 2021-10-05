@@ -123,27 +123,34 @@
     <hr>
     {#End mini nav#}
 
-
     <table class="table table-hover">
         <thead>
         <tr>
             <th scope="col"></th>
-            <th scope="col">Image</th>
-            <th scope="col">Name</th>
-            <th scope="col">Price</th>
+            <th scope="col">IMAGE</th>
+            <th scope="col">NAME</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">QUANTITY</th>
 
         </tr>
         </thead>
         <tbody>
 
-
-        {% for product in products.products.all %}
+        {% for product in order_product %}
             <tr>
                 <th scope="row">{{ product.count }}</th>
                 <td><img class="productImage" src="/media/{{ product.image }}" alt="product_image"/></td>
                 <td>{{ product.name }}</td>
                 <td>{{ product.price }}</td>
+                {% for item in order %}
+
+                    {% if product.name == item.product_name %}
+                        <td>{{ item.quantity }}</td>
+                    {% endif %}
+                {% endfor %}
             </tr>
+
+
         {% endfor %}
 
         </tbody>
