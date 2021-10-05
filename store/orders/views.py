@@ -1,8 +1,5 @@
-import timeit
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
 from django.http import HttpResponse
 from django.shortcuts import render
 from customers.models import Address
@@ -82,9 +79,9 @@ def checkout(request):
         customer = request.user
         addresses = Address.objects.filter(customer=customer)
         basket = request.session.get('basket')
-        product_names = basket.keys()
-        total_price = Product.objects.filter(name__in=product_names).aggregate(Sum('price'))
-        context['total_price'] = total_price['price__sum']
+        total_price = sum(
+            [Product.objects.get(name=product_name).price * quantity for product_name, quantity in basket.items()])
+        context['total_price'] = total_price
         context['addresses'] = addresses
         return render(request, 'orders/checkout.html', context)
 
@@ -93,9 +90,9 @@ def checkout(request):
     # If the user has an address registered in the database and uses it to pay an order
     if 'address_id' in request.POST:
         basket = request.session.get('basket')
-        product_names = basket.keys()
         delivery_method = request.POST.get('delivery_method')
-        total_price = Product.objects.filter(name__in=product_names).aggregate(Sum('price'))['price__sum']
+        total_price = sum(
+            [Product.objects.get(name=product_name).price * quantity for product_name, quantity in basket.items()])
 
         if delivery_method == 'standard':
             total_price = total_price
@@ -135,9 +132,9 @@ def checkout(request):
     # If the user has no address registered in the database
     elif 'address' in request.POST:
         basket = request.session.get('basket')
-        product_names = basket.keys()
         delivery_method = request.POST.get('delivery_method')
-        total_price = Product.objects.filter(name__in=product_names).aggregate(Sum('price'))['price__sum']
+        total_price = sum(
+            [Product.objects.get(name=product_name).price * quantity for product_name, quantity in basket.items()])
 
         if delivery_method == 'standard':
             total_price = total_price
