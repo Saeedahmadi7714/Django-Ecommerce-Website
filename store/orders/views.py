@@ -92,7 +92,8 @@ def checkout(request):
         basket = request.session.get('basket')
         delivery_method = request.POST.get('delivery_method')
         total_price = sum(
-            [Product.objects.get(name=product_name).price * quantity for product_name, quantity in basket.items()])
+            [Product.objects.get(name=product_name).price * quantity for product_name, quantity in
+             basket.items()]).amount
 
         if delivery_method == 'standard':
             total_price = total_price
@@ -134,7 +135,8 @@ def checkout(request):
         basket = request.session.get('basket')
         delivery_method = request.POST.get('delivery_method')
         total_price = sum(
-            [Product.objects.get(name=product_name).price * quantity for product_name, quantity in basket.items()])
+            [Product.objects.get(name=product_name).price * quantity for product_name, quantity in
+             basket.items()]).amount
 
         if delivery_method == 'standard':
             total_price = total_price
