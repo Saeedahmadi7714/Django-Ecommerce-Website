@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from django.http import HttpResponse
 from django.shortcuts import render
 from customers.models import Address
@@ -127,6 +128,10 @@ def checkout(request):
         [order.products.create(product_name=product_name, quantity=quantity) for product_name, quantity in
          basket.items()]
 
+        # Reduce the number of available products in stock
+        [Product.objects.filter(name=product_name).update(number_of_product=F('number_of_product') - int(quantity)) for
+         product_name, quantity in basket.items()]
+
         del request.session['basket']
         return render(request, 'orders/checkout_complete.html')
 
@@ -181,6 +186,10 @@ def checkout(request):
 
         [order.products.create(product_name=product_name, quantity=quantity) for product_name, quantity in
          basket.items()]
+
+        # Reduce the number of available products in stock
+        [Product.objects.filter(name=product_name).update(number_of_product=F('number_of_product') - int(quantity)) for
+         product_name, quantity in basket.items()]
 
         del request.session['basket']
         return render(request, 'orders/checkout_complete.html')
