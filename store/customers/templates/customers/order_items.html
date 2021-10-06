@@ -1,4 +1,5 @@
 {% extends 'products/base.html' %}
+{% load subtotal %}
 {% load bootstrap4 %}
 {% bootstrap_field field %}
 {% bootstrap_field form %}
@@ -131,6 +132,7 @@
             <th scope="col">NAME</th>
             <th scope="col">PRICE</th>
             <th scope="col">QUANTITY</th>
+            <th scope="col">TOTAL PRICE</th>
 
         </tr>
         </thead>
@@ -146,6 +148,10 @@
 
                     {% if product.name == item.product_name %}
                         <td>{{ item.quantity }}</td>
+
+                        <td>{% subtotal_calculator item.quantity product.price %}</td>
+
+
                     {% endif %}
                 {% endfor %}
             </tr>
