@@ -6,6 +6,10 @@ from rest_framework.test import APITestCase
 from customers.models import Customer
 from orders.models import Discount
 
+from django.test import SimpleTestCase
+from django.urls import resolve, reverse
+from orders.api.views import offer_code_api_view
+
 
 class TestOfferCodeUpApi(APITestCase):
     def setUp(self):
@@ -60,3 +64,10 @@ class TestOfferCodeUpApi(APITestCase):
         self.assertEqual(
             response.data['expired'], 'Your discount code has been used.'
         )
+
+
+class TestOrderApiUrls(SimpleTestCase):
+
+    def test_offer_code_api_url_is_resolved(self):
+        url = reverse('offer_code_api')
+        self.assertEqual(resolve(url).func, offer_code_api_view)
