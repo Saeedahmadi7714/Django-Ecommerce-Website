@@ -4,33 +4,32 @@ from customers.models import Customer, Address
 
 class TestCustomerModel(TestCase):
     def setUp(self):
-        customer = Customer.objects.create(
+        self.customer = Customer.objects.create_user(
             username='Saeed',
             first_name='Saeed',
             last_name='ahmadi',
             phone_number='09308150414',
-            email='saeed@gmail.com'
+            email='saeed@gmail.com',
+            password='password'
         )
-        customer.set_password('password')
 
     def test_customer_is_created(self):
-        customer = Customer.objects.get(username='Saeed')
-        self.assertEqual(str(customer), 'Saeedahmadi')
+        self.assertEqual(str(self.customer), 'Saeedahmadi')
 
 
 class TestAddressModel(TestCase):
 
     def setUp(self):
-        customer = Customer.objects.create(
+        customer = Customer.objects.create_user(
             username='Saeed',
             first_name='Saeed',
             last_name='ahmadi',
             phone_number='09308150414',
-            email='saeed@gmail.com'
+            email='saeed@gmail.com',
+            password='password'
         )
-        customer.set_password('password')
 
-        Address.objects.create(
+        self.address = Address.objects.create(
             customer=customer,
             address='1407 Rainbow Drive',
             country='USA',
@@ -40,6 +39,5 @@ class TestAddressModel(TestCase):
         )
 
     def test_address_is_created(self):
-        address = Address.objects.get(id=1)
-        self.assertEqual(str(address), '1407 Rainbow Drive')
-        self.assertEqual(address.address_type, 'home')
+        self.assertEqual(str(self.address), '1407 Rainbow Drive')
+        self.assertEqual(self.address.address_type, 'home')

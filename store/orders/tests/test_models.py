@@ -6,19 +6,17 @@ from orders.models import Discount, OrderItem, Order
 
 class TestDiscountModel(TestCase):
     def setUp(self):
-        customer = Customer.objects.create(
-            username='Saeed', first_name='Saeed', last_name='ahmadi'
+        self.customer = Customer.objects.create_user(
+            username='Saeed', first_name='Saeed', last_name='ahmadi', password='password'
         )
-        customer.set_password('password')
 
-        Discount.objects.create(
-            customer=customer, code='DiscountCode', amount=30, expire_date=now()
+        self.discount = Discount.objects.create(
+            customer=self.customer, code='DiscountCode', amount=30, expire_date=now()
         )
 
     def test_discount_is_created(self):
-        discount = Discount.objects.get(id=1)
-        self.assertEqual(str(discount), 'Saeedahmadi 30%')
-        self.assertEqual(discount.is_active, True)
+        self.assertEqual(str(self.discount), 'Saeedahmadi 30%')
+        self.assertEqual(self.discount.is_active, True)
 
 
 class TestOrderItemModel(TestCase):
@@ -34,13 +32,12 @@ class TestOrderItemModel(TestCase):
 
 class TestOrderModelModel(TestCase):
     def setUp(self):
-        customer = Customer.objects.create(
-            username='Saeed', first_name='Saeed', last_name='ahmadi'
+        self.customer = Customer.objects.create_user(
+            username='Saeed', first_name='Saeed', last_name='ahmadi', password='password'
         )
-        customer.set_password('password')
 
-        address = Address.objects.create(
-            customer=customer,
+        self.address = Address.objects.create(
+            customer=self.customer,
             address='1407 Rainbow Drive',
             country='USA',
             state='Ohio',
@@ -52,20 +49,19 @@ class TestOrderModelModel(TestCase):
         order_item_2 = OrderItem.objects.create(product_name='product2', quantity=2)
         order_item_3 = OrderItem.objects.create(product_name='product3', quantity=3)
 
-        order = Order.objects.create(
-            customer=customer,
-            address=address,
+        self.order = Order.objects.create(
+            customer=self.customer,
+            address=self.address,
             delivery_method='standard',
             total_price=154
         )
 
-        order.products.add(order_item_1)
-        order.products.add(order_item_2)
-        order.products.add(order_item_3)
+        self.order.products.add(order_item_1)
+        self.order.products.add(order_item_2)
+        self.order.products.add(order_item_3)
 
     def test_order_is_created(self):
-        order = Order.objects.get(id=1)
-        order_products_count = order.products.count()
-        self.assertEqual(str(order), 'Saeedahmadi')
+        order_products_count = self.order.products.count()
+        self.assertEqual(str(self.order), 'Saeedahmadi')
         self.assertEqual(order_products_count, 3)
-        self.assertEqual(order.status, 'ready_to_ship')
+        self.assertEqual(self.order.status, 'ready_to_ship')
