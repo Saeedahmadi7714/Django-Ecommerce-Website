@@ -18,13 +18,17 @@ class SignUpSerializer(serializers.ModelSerializer):
         }
 
     def save(self):
-        new_customer = Customer(
-            username=self._validated_data['username'],
-        )
+
+        username = self.validated_data['username']
         password = self.validated_data['password']
         password_check = self.validated_data['password_check']
 
-        if password != password_check:
+        if len(username) < 3:
+            raise serializers.ValidationError({
+                'username': _('Your username must be at least 3 characters long.'),
+            })
+
+        elif password != password_check:
             raise serializers.ValidationError({
                 'password': _('Passwords must match'),
             })
@@ -33,10 +37,14 @@ class SignUpSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'password': _('Your password must be at least 8 characters long.')
             })
-
-        new_customer.set_password(password)
-        new_customer.save()
-        return new_customer
+        else:
+            # new_customer = Customer(
+            #     username=self._validated_data['username'],
+            # )
+            # new_customer.set_password(password)
+            # new_customer.save()
+            new_customer = Customer.objects.create_user(username=username, password=password)
+            return new_customer
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
