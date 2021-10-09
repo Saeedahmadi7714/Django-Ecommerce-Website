@@ -18,6 +18,15 @@ class TestSignUpApi(APITestCase):
         response = self.client.post('/api/v1/sign_up/', data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
+    def test_sing_up_with_short_length_username(self):
+        data = {
+            'username': 'Sa',
+            'password': 'password',
+            'password_check': 'password'
+        }
+        response = self.client.post('/api/v1/sign_up/', data)
+        self.assertEqual(response.data['username'], 'Your username must be at least 3 characters long.')
+
     def test_sign_up_with_do_not_match_passwords(self):
         data = {
             'username': 'Saeed',
