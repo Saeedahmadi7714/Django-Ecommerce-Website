@@ -2,6 +2,7 @@
 $(document).ready(function () {
 
     $("#signUpBtn").click(function (event) {
+
         //Stop submit the form, we will post it manually.
         event.preventDefault();
 
@@ -26,14 +27,55 @@ $(document).ready(function () {
                 window.location = '/customer/sign_in/';
             },
             error: function (error) {
-                console.log("ERROR : ", error);
-                $(".alert").remove();
-                $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON'][Object.keys(error['responseJSON'])[0]]}</div>`)
+
+                // Username length < 3
+                if ('username' in error['responseJSON'] && error['responseJSON']['username'].includes('3')) {
+                    $(".alert").remove();
+                    $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON']['username']}</div>`)
+
+                    // Blank username
+                } else if ('username' in error['responseJSON'] && error['responseJSON']['username'][0].includes('blank')) {
+                    $(".alert").remove();
+                    $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">Username must not be blank</div>`)
+
+                    // Blank password
+                } else if ('password' in error['responseJSON'] && error['responseJSON']['password'][0].includes('blank')) {
+                    $(".alert").remove();
+                    $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">Please enter a password</div>`)
+
+                    // Blank password check
+                } else if ('password_check' in error['responseJSON'] && error['responseJSON']['password_check'][0].includes('blank')) {
+                    $(".alert").remove();
+                    $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">Please enter password check</div>`)
+                }
+
+                // Duplicate username
+                else if ('username' in error['responseJSON'] && error['responseJSON']['username'][0].includes('exists.')) {
+                    $(".alert").remove();
+                    $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON']['username'][0]}</div>`)
+                }
+
+                // Password length < 8
+                else if ('password' in error['responseJSON'] && error['responseJSON']['password'].includes('8')) {
+                    $(".alert").remove();
+                    $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON']['password']}</div>`)
+                }
+
+                // Passwords not match
+                else if ('password' in error['responseJSON'] && error['responseJSON']['password'].includes('must match')) {
+                    $(".alert").remove();
+                    $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON']['password']}</div>`)
+                }
+
+                console.log("ERROR : ", error['responseJSON']);
+                // $(".alert").remove();
+                // $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON'][Object.keys(error['responseJSON'])[0]]}</div>`)
 
             }
         });
 
-    });
+    })
+    ;
 });
 
 
