@@ -67,10 +67,6 @@ $(document).ready(function () {
                     $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON']['password']}</div>`)
                 }
 
-                console.log("ERROR : ", error['responseJSON']);
-                // $(".alert").remove();
-                // $("#error").prepend(`<div class="col-xl-12 alert alert-danger d-flex justify-content-center" role="alert">${error['responseJSON'][Object.keys(error['responseJSON'])[0]]}</div>`)
-
             }
         });
 
