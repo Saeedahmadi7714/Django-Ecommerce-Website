@@ -36,8 +36,8 @@ $ cd store
 $ cd conf
 ```
 
-##### ** Open and read .env_sample.txt **
-##### ** back to store folder **
+** ##### Open and read .env_sample.txt **
+** ##### back to store folder **
 
 #####  Run the tests :
 ```bash
@@ -52,7 +52,7 @@ python3 manage.py migrate
 
 #####  Run the development server :
 ```bash
-python3 manage.runserver
+python3 manage.py runserver
 ```
 Open http://127.0.0.1:8000 in your browser. 
 
