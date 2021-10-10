@@ -36,14 +36,26 @@ $ cd store
 $ cd conf
 ```
 
-##### Open and read .env_sample.txt
-##### back to store folder
+##### ** Open and read .env_sample.txt **
+##### ** back to store folder **
 
 #####  Run the tests :
 ```bash
-python3 manage.py
+python3 manage.py tests
+```
+
+#####  Run makemigrations and migrate :
+```bash
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
+#####  Run the development server :
+```bash
+python3 manage.runserver
 ```
 Open http://127.0.0.1:8000 in your browser. 
+
 ## License
 [GNU GPLv3](https://https://choosealicense.com/licenses/gpl-3.0/)
 
