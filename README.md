@@ -37,7 +37,7 @@ $ cd conf
 ```
 
 ### Open and read .env_sample.txt 
-### back to store folder 
+### back to the store folder 
 
 #####  Run the tests :
 ```bash
