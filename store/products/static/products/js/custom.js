@@ -314,7 +314,7 @@ $(document).ready(function () {
                 const totalPriceAfterOffer = (splicedTotalPrice - offer).toFixed(2)
                 $('#totalPrice').text(`Total price : $${totalPriceAfterOffer}`)
 
-                // Disable apply button if offer code successfuly applied
+                // Disable apply button if offer code successfully applied
                 $("#applyBtn").attr('disabled', true);
             },
             error: function (error) {
@@ -325,5 +325,3 @@ $(document).ready(function () {
         });
     });
 });
-
-
