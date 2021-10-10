@@ -7,7 +7,7 @@
 ## How run the project?
 ##### Clone the repository :
 ```bash
-$ git@github.com:Saeedahmadi7714/Django-Ecommerce-Website.git
+$ git clone https://github.com/Saeedahmadi7714/Django-Ecommerce-Website.git
 $ cd store
 ```
 ##### Create a virtualenv and activate it:
