@@ -31,7 +31,7 @@ $ pip3 install -r requirements.txt
 ```bash
 $ cd store
 ```
-##### Creating a .env file from file .evn_sample.txt : 
+##### Go to teh configuration folder and creating a .env file from file .evn_sample.txt : 
 ```bash
 $ cd conf
 ```
