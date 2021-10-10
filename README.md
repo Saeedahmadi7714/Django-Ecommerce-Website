@@ -3,3 +3,45 @@
 
 
 
+
+## How run the project?
+##### Clone the repository :
+```bash
+$ git clone https://github.com/Saeedahmadi7714/quote.git
+$ cd quote
+```
+##### Create a virtualenv and activate it:
+ ```bash
+$ python3 -m venv venv
+$ . venv/bin/activate.
+```
+##### Or on Windows cmd : 
+ ```bash
+> py -3 -m venv venv
+> venv\Scripts\activate.bat
+```
+##### Install the requirements :
+```bash
+$ pip3 install -r requirements.txt
+```
+#####  Et :
+```bash
+$ 
+$ 
+$ 
+```
+##### Or on Windows cmd : 
+```bash
+> 
+> 
+> 
+```
+Open http://127.0.0.1:8000 in your browser. 
+## License
+[GNU GPLv3](https://https://choosealicense.com/licenses/gpl-3.0/)
+
+
+
+
+
+
