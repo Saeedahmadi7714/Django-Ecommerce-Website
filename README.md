@@ -5,10 +5,13 @@
 
 
 ## How run the project?
+
+
 ##### Clone the repository :
 ```bash
 $ git clone https://github.com/Saeedahmadi7714/Django-Ecommerce-Website.git
 $ cd Django-Ecommerce-Website
+$ cd store
 ```
 ##### Create a virtualenv and activate it:
  ```bash
@@ -24,15 +27,31 @@ $ . venv/bin/activate
 ```bash
 $ pip3 install -r requirements.txt
 ```
-##### Creating a file from file .evn_sample
+##### Go to teh configuration folder and creating a .env file from file .evn_sample.txt : 
+```bash
+$ cd conf
+```
 
-##### Go to the main project route:
-$ cd store
+### Open and read .env_sample.txt 
+### back to the store folder 
+
 #####  Run the tests :
 ```bash
-python3 manage.py
+python3 manage.py tests
+```
+
+#####  Run makemigrations and migrate :
+```bash
+python3 manage.py makemigrations
+python3 manage.py migrate
+```
+
+#####  Run the development server :
+```bash
+python3 manage.py runserver
 ```
 Open http://127.0.0.1:8000 in your browser. 
+
 ## License
 [GNU GPLv3](https://https://choosealicense.com/licenses/gpl-3.0/)
 
