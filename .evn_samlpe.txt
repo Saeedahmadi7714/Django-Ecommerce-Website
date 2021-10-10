@@ -1,8 +1,8 @@
 DOC = https://pypi.org/project/python-decouple/
 
-1 - Create a .env file near to project settings file
+1 - Create a .env file near to project settings file [inside conf folder]
 
-2 - Fill these parameters [ without ' ' ]
+2 - Fill out the variables [ without ' ' ]
 
 
 SECRET_KEY = django secret key or yours
