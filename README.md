@@ -8,6 +8,7 @@
 ##### Clone the repository :
 ```bash
 $ git clone https://github.com/Saeedahmadi7714/Django-Ecommerce-Website.git
+$ cd Django-Ecommerce-Website
 $ cd store
 ```
 ##### Create a virtualenv and activate it:
