@@ -5,6 +5,9 @@
 
 
 ## How run the project?
+
+
+
 ##### Clone the repository :
 ```bash
 $ git clone https://github.com/Saeedahmadi7714/Django-Ecommerce-Website.git
@@ -24,10 +27,16 @@ $ . venv/bin/activate
 ```bash
 $ pip3 install -r requirements.txt
 ```
-##### Creating a file from file .evn_sample
-
 ##### Go to the main project route:
+```bash
 $ cd store
+```
+##### Creating a .env file from file .evn_sample.txt : 
+```bash
+$ cd conf
+```
+Open and read .env_sample.txt
+back to store folder
 #####  Run the tests :
 ```bash
 python3 manage.py
