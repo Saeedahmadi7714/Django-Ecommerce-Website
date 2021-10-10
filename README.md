@@ -12,6 +12,7 @@
 ```bash
 $ git clone https://github.com/Saeedahmadi7714/Django-Ecommerce-Website.git
 $ cd Django-Ecommerce-Website
+$ cd store
 ```
 ##### Create a virtualenv and activate it:
  ```bash
@@ -26,10 +27,6 @@ $ . venv/bin/activate
 ##### Install the requirements :
 ```bash
 $ pip3 install -r requirements.txt
-```
-##### Go to the main project route:
-```bash
-$ cd store
 ```
 ##### Go to teh configuration folder and creating a .env file from file .evn_sample.txt : 
 ```bash
