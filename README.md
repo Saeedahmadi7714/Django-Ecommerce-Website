@@ -1,4 +1,4 @@
-# E-commerce website using Django
+# Mars Shop
 
 
 
