@@ -9,12 +9,11 @@
 ```bash
 $ git clone https://github.com/Saeedahmadi7714/Django-Ecommerce-Website.git
 $ cd Django-Ecommerce-Website
-$ cd store
 ```
 ##### Create a virtualenv and activate it:
  ```bash
 $ python3 -m venv venv
-$ . venv/bin/activate.
+$ . venv/bin/activate
 ```
 ##### Or on Windows cmd : 
  ```bash
@@ -24,6 +23,7 @@ $ . venv/bin/activate.
 ##### Install the requirements :
 ```bash
 $ pip3 install -r requirements.txt
+$ cd store
 ```
 #####  Et :
 ```bash
