@@ -36,8 +36,8 @@ $ cd store
 $ cd conf
 ```
 
-** ##### Open and read .env_sample.txt **
-** ##### back to store folder **
+### Open and read .env_sample.txt 
+### back to store folder 
 
 #####  Run the tests :
 ```bash
