@@ -23,19 +23,14 @@ $ . venv/bin/activate
 ##### Install the requirements :
 ```bash
 $ pip3 install -r requirements.txt
+```
+##### Creating a file from file .evn_sample
+
+##### Go to the main project route:
 $ cd store
-```
-#####  Et :
+#####  Run the tests :
 ```bash
-$ 
-$ 
-$ 
-```
-##### Or on Windows cmd : 
-```bash
-> 
-> 
-> 
+python3 manage.py
 ```
 Open http://127.0.0.1:8000 in your browser. 
 ## License
