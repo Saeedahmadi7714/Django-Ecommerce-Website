@@ -36,9 +36,9 @@ $ cd store
 $ cd conf
 ```
 
-###### Open and read .env_sample.txt
+##### Open and read .env_sample.txt
+##### back to store folder
 
-back to store folder
 #####  Run the tests :
 ```bash
 python3 manage.py
