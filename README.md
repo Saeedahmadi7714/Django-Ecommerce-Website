@@ -7,7 +7,6 @@
 ## How run the project?
 
 
-
 ##### Clone the repository :
 ```bash
 $ git clone https://github.com/Saeedahmadi7714/Django-Ecommerce-Website.git
