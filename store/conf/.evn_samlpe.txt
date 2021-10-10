@@ -1,6 +1,6 @@
 DOC = https://pypi.org/project/python-decouple/
 
-1 - Create a .env file near to project settings file [inside conf folder]
+1 - Create a .env file near to project settings file [inside this folder]
 
 2 - Fill out the variables [ without ' ' ]
 
