@@ -160,9 +160,25 @@
                                             <li><a class="btn btn-success text-white mt-2"
                                                    href="{% url 'products:product_detail' product.slug %}"><i
                                                     class="far fa-eye"></i></a></li>
-                                            <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i
-                                                    class="fas fa-cart-plus"></i></a></li>
-                                        </ul>
+
+
+<!-- Add to basket  product with quantity  -->
+                                            <form action="{% url 'orders:basket' %}" method="POST">
+                                                {% csrf_token %}
+
+                                                <input type="hidden" name="product_name" value="{{ product.name }}">
+                                                <input type="hidden" name="product_quantity"
+                                                       id="product_quantity"
+                                                       value="1">
+
+                                                <li>
+                                                    <button type="submit" class="btn btn-success text-white mt-2">
+                                                        <i class="fas fa-cart-plus"></i>
+                                                    </button>
+                                                </li>
+                                            </form>
+<!-- End add to basket -->
+                                       </ul>
                                     </div>
                                 </div>
 
@@ -186,6 +202,10 @@
                     {% endfor %}
 
                 </div>
+
+
+                <!-- Load more Button -->
+{% if products|length > 0 %}
                 <div div="row">
                     <ul class="pagination pagination-lg justify-content-center">
                         <button id="loadMoreBtn" type="button" class="btn orderTableBtn">
@@ -202,6 +222,10 @@
                         {#                        </li>#}
                     </ul>
                 </div>
+{% endif %}
+<!-- End load more button -->
+
+
             </div>
 
         </div>
