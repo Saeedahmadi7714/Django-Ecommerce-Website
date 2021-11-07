@@ -53,7 +53,8 @@ def customer_profile_view(request):
             form.save()
             context = dict()
             context['form'] = CustomerProfileForm(instance=request.user)
-            messages.success(request, _('Profile details updated successfully.'))
+            messages.success(request, _(
+                'Profile details updated successfully.'))
             return render(request, 'customers/customer_profile.html', context)
 
         return HttpResponse('Form invalid', form.errors)
@@ -121,7 +122,8 @@ def order_items_view(request, order_id):
     if request.method == 'GET':
         context = dict()
         order = Order.objects.get(id=order_id).products.all()
-        order_products = [Product.objects.get(name=product_name) for product_name in order]
+        order_products = [Product.objects.get(
+            name=product_name) for product_name in order]
         context['order'] = order
         context['order_product'] = order_products
         return render(request, 'customers/order_items.html', context)

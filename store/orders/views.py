@@ -18,7 +18,8 @@ def basket_view(request):
         if request.session.get('basket'):
             basket = request.session.get('basket')
             product_names = basket.keys()
-            context['products_in_basket'] = Product.objects.filter(name__in=product_names)
+            context['products_in_basket'] = Product.objects.filter(
+                name__in=product_names)
             return render(request, 'orders/basket.html', context)
         else:
             # Empty basket
@@ -28,7 +29,8 @@ def basket_view(request):
     product_quantity = request.POST.get('product_quantity')
 
     if not request.session.get('basket'):
-        number_of_products_is_stock = Product.objects.get(name=product_name).number_of_product
+        number_of_products_is_stock = Product.objects.get(
+            name=product_name).number_of_product
         if int(product_quantity) > number_of_products_is_stock or int(product_quantity) > 100:
             messages.error(request, 'More than inventory.')
             # Empty basket
@@ -38,18 +40,21 @@ def basket_view(request):
         request.session['basket'] = {
             product_name: product_quantity
         }
-        context['products_in_basket'] = Product.objects.filter(name=product_name)
+        context['products_in_basket'] = Product.objects.filter(
+            name=product_name)
         return render(request, 'orders/basket.html', context)
 
     else:
         # Update the basket or add new items to the basket
         basket = request.session.get('basket')
-        number_of_products_is_stock = Product.objects.get(name=product_name).number_of_product
+        number_of_products_is_stock = Product.objects.get(
+            name=product_name).number_of_product
 
         if int(product_quantity) > number_of_products_is_stock or int(product_quantity) > 100:
             product_names = basket.keys()
             messages.error(request, 'More than inventory.')
-            context['products_in_basket'] = Product.objects.filter(name__in=product_names)
+            context['products_in_basket'] = Product.objects.filter(
+                name__in=product_names)
             return render(request, 'orders/basket.html', context)
 
         # Add new item to basket
@@ -57,7 +62,8 @@ def basket_view(request):
         request.session.modified = True
         product_names = basket.keys()
         messages.success(request, 'Your basket has been updated.')
-        context['products_in_basket'] = Product.objects.filter(name__in=product_names)
+        context['products_in_basket'] = Product.objects.filter(
+            name__in=product_names)
         return render(request, 'orders/basket.html', context)
 
 
@@ -86,8 +92,6 @@ def checkout(request):
         context['addresses'] = addresses
         return render(request, 'orders/checkout.html', context)
 
-    print(request.POST)
-
     # If the user has an address registered in the database and uses it to pay an order
     if 'address_id' in request.POST:
         basket = request.session.get('basket')
@@ -108,8 +112,10 @@ def checkout(request):
 
         # If user have an offer code
         if request.POST.get('offer_code'):
-            discount = Discount.objects.get(code=request.POST.get('offer_code'))
-            total_price_with_discount = (total_price * int(discount.amount)) / 100
+            discount = Discount.objects.get(
+                code=request.POST.get('offer_code'))
+            total_price_with_discount = (
+                                                total_price * int(discount.amount)) / 100
             total_price_with_discount = total_price - total_price_with_discount
         else:
             discount = None
@@ -167,8 +173,10 @@ def checkout(request):
         new_address.save()
         # If user have an offer code
         if request.POST.get('offer_code'):
-            discount = Discount.objects.get(code=request.POST.get('offer_code'))
-            total_price_with_discount = (total_price * int(discount.amount)) / 100
+            discount = Discount.objects.get(
+                code=request.POST.get('offer_code'))
+            total_price_with_discount = (
+                                                total_price * int(discount.amount)) / 100
             total_price_with_discount = total_price - total_price_with_discount
         else:
             discount = None
