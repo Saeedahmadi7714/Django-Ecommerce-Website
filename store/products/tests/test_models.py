@@ -14,7 +14,8 @@ class TestIPaddressModel(TestCase):
 
 class TestCategoryModel(TestCase):
     def setUp(self):
-        self.category = Category.objects.create(name='first_category', slug='first-category')
+        self.category = Category.objects.create(
+            name='first_category', slug='first-category')
 
     def test_category_is_created(self):
         self.assertEqual(str(self.category), 'first_category')
@@ -24,7 +25,8 @@ class TestCategoryModel(TestCase):
 
 class TestProductModel(TestCase):
     def setUp(self):
-        self.category = Category.objects.create(name='first_category', slug='first-category')
+        self.category = Category.objects.create(
+            name='first_category', slug='first-category')
         self.ip_address = IPaddress.objects.create(ip_address='127.0.0.1')
 
         self.product = Product.objects.create(

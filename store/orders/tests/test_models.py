@@ -45,9 +45,12 @@ class TestOrderModelModel(TestCase):
             postcode='44512'
         )
 
-        order_item_1 = OrderItem.objects.create(product_name='product1', quantity=1)
-        order_item_2 = OrderItem.objects.create(product_name='product2', quantity=2)
-        order_item_3 = OrderItem.objects.create(product_name='product3', quantity=3)
+        order_item_1 = OrderItem.objects.create(
+            product_name='product1', quantity=1)
+        order_item_2 = OrderItem.objects.create(
+            product_name='product2', quantity=2)
+        order_item_3 = OrderItem.objects.create(
+            product_name='product3', quantity=3)
 
         self.order = Order.objects.create(
             customer=self.customer,
