@@ -16,7 +16,8 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', customer_profile_view, name='profile'),
     path('addresses/', addresses_view, name='addresses'),
-    path('delete_address/<int:pk>/', DeleteUserAddress.as_view(), name='delete_address'),
+    path('delete_address/<int:pk>/',
+         DeleteUserAddress.as_view(), name='delete_address'),
     path('orders/', OrdersView.as_view(), name='orders'),
     path('order_items/<int:order_id>/', order_items_view, name='order_items'),
 
