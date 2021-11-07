@@ -190,7 +190,6 @@ $(document).ready(function () {
                 let result = response.results
 
                 for (let each in result) {
-
                     $("#productRow").append(
                         ` <div class="col-md-4">
                             <div class="card mb-4 product-wap rounded-0">
@@ -200,10 +199,8 @@ $(document).ready(function () {
 
                                     <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                         <ul class="list-unstyled">
-                                            <li><a class="btn btn-success text-white" href="shop-single.html"><i
-                                                    class="far fa-heart"></i></a></li>
                                             <li><a class="btn btn-success text-white mt-2"
-                                                   href="{% url 'products:product_detail' product.slug %}"><i
+                                                   href="http://localhost:8000/products/${result[each]['slug']}"><i
                                                     class="far fa-eye"></i></a></li>
                                             <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i
                                                     class="fas fa-cart-plus"></i></a></li>
