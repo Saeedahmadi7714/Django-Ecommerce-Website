@@ -13,7 +13,8 @@ from orders.api.views import offer_code_api_view
 
 class TestOfferCodeUpApi(APITestCase):
     def setUp(self):
-        self.customer = Customer.objects.create_user(username='Saeed', password='password')
+        self.customer = Customer.objects.create_user(
+            username='Saeed', password='password')
         expire_date = now() + timedelta(days=1)
         self.discount = Discount.objects.create(
             customer=self.customer, code='Davinci', amount=25, expire_date=expire_date

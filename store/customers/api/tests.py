@@ -25,7 +25,8 @@ class TestSignUpApi(APITestCase):
             'password_check': 'password'
         }
         response = self.client.post('/api/v1/sign_up/', data)
-        self.assertEqual(response.data['username'], 'Your username must be at least 3 characters long.')
+        self.assertEqual(
+            response.data['username'], 'Your username must be at least 3 characters long.')
 
     def test_sign_up_with_do_not_match_passwords(self):
         data = {
@@ -119,11 +120,13 @@ class TestCustomerApiUrls(SimpleTestCase):
     def test_sign_up_api_url_is_resolved(self):
         url = reverse('sign_up_api')
         # class-based views need to be compared by name
-        self.assertEqual(resolve(url).func.__name__, SignUpView.as_view().__name__)
+        self.assertEqual(resolve(url).func.__name__,
+                         SignUpView.as_view().__name__)
 
     def test_change_password_api_url_is_resolved(self):
         url = reverse('change_password_api')
-        self.assertEqual(resolve(url).func.__name__, ChangePasswordView.as_view().__name__)
+        self.assertEqual(resolve(url).func.__name__,
+                         ChangePasswordView.as_view().__name__)
 
 
 class TestChangePasswordApi(APITestCase):

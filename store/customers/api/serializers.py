@@ -43,7 +43,8 @@ class SignUpSerializer(serializers.ModelSerializer):
             # )
             # new_customer.set_password(password)
             # new_customer.save()
-            new_customer = Customer.objects.create_user(username=username, password=password)
+            new_customer = Customer.objects.create_user(
+                username=username, password=password)
             return new_customer
 
 

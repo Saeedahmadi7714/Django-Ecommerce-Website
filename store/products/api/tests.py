@@ -17,7 +17,8 @@ class TestCreateContactApi(APITestCase):
         response = self.client.post('/api/v1/contact/', data)
         self.assertEqual(
             response.data,
-            {'name': 'Saeed', 'email': 'saeed@gmail.com', 'subject': 'Test', 'message': 'Some message for test.'}
+            {'name': 'Saeed', 'email': 'saeed@gmail.com',
+                'subject': 'Test', 'message': 'Some message for test.'}
         )
 
     def test_contact_with_no_subject(self):
@@ -85,8 +86,10 @@ class TestProductsApiUrls(SimpleTestCase):
 
     def test_create_contact_api_url_is_resolved(self):
         url = reverse('create_contact_api')
-        self.assertEqual(resolve(url).func.__name__, CreateContactApi.as_view().__name__, )
+        self.assertEqual(resolve(url).func.__name__,
+                         CreateContactApi.as_view().__name__, )
 
     def test_product_list_api_url_is_resolved(self):
         url = reverse('product_list_api')
-        self.assertEqual(resolve(url).func.__name__, ProductListApi.as_view().__name__, )
+        self.assertEqual(resolve(url).func.__name__,
+                         ProductListApi.as_view().__name__, )
