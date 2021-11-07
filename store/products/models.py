@@ -33,7 +33,8 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name='products')
     description = models.TextField()
     image = models.ImageField(upload_to='product_images')
     number_of_product = models.PositiveSmallIntegerField(blank=True, null=True)

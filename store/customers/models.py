@@ -7,8 +7,10 @@ from conf import settings
 
 
 class Customer(AbstractUser):
-    phone_number_regex = RegexValidator(regex=r"^\+?1?\d{8,15}$", message=_('Must enter a valid phone number'))
-    phone_number = models.CharField(validators=[phone_number_regex], max_length=16, blank=True)
+    phone_number_regex = RegexValidator(
+        regex=r"^\+?1?\d{8,15}$", message=_('Must enter a valid phone number'))
+    phone_number = models.CharField(
+        validators=[phone_number_regex], max_length=16, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -32,7 +34,8 @@ class Address(models.Model):
     ]
 
     # Users can have one or many addresses
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    customer = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     address = models.CharField(
         _("Address"),
         max_length=1024,
