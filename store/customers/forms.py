@@ -18,9 +18,12 @@ class SignInForm(AuthenticationForm):
 
 
 class ChangePasswordForm(forms.ModelForm):
-    password = forms.CharField(max_length=150, required=True, widget=forms.PasswordInput())
-    new_password = forms.CharField(max_length=150, required=True, widget=forms.PasswordInput())
-    new_password_check = forms.CharField(max_length=150, required=True, widget=forms.PasswordInput())
+    password = forms.CharField(
+        max_length=150, required=True, widget=forms.PasswordInput())
+    new_password = forms.CharField(
+        max_length=150, required=True, widget=forms.PasswordInput())
+    new_password_check = forms.CharField(
+        max_length=150, required=True, widget=forms.PasswordInput())
 
     class Meta:
         model = Customer
